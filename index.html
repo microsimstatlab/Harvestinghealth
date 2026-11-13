@@ -46,6 +46,7 @@
   details summary{cursor:pointer;font-weight:700}
   .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:10px}
   .muted{color:var(--muted);font-size:.88rem}
+  .per{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
   .guide{background:#fffbea;border-color:#f1e2a6}
   .guide b{color:#7a5a00}
   .list{margin:0;padding-left:20px}
@@ -64,6 +65,48 @@
       <li>💧 <b>Coconut water:</b> <b>100% coconut water</b>. Check the ingredients: <b>NO SUGAR ADDED</b></li>
       <li>🥛 <b>Alternative milk:</b> <b>SOY</b> (preferred, for its protein) or <b>coconut milk</b></li>
     </ul>
+  </div>
+
+  <div class="card">
+    <h2>🥤 Standard amount per smoothie</h2>
+    <div class="per">
+      <ul class="list" style="flex:1;min-width:200px">
+        <li>🍓 <b>Organic frozen fruit:</b> <span style="white-space:nowrap">2.82 oz</span></li>
+        <li>🥛 <b>Milk (soy or coconut):</b> <span style="white-space:nowrap">1.67 fl oz</span></li>
+        <li>💧 <b>100% coconut water:</b> <span style="white-space:nowrap">1.58 fl oz</span></li>
+        <li class="muted">About 6 fl oz total. Fills an 8 oz cup about ¾ of the way.</li>
+      </ul>
+      <svg viewBox="185 45 485 400" role="img" aria-label="An 8 oz cup about three-quarters full: frozen fruit 46% at the bottom, milk 28% in the middle, coconut water 26% on top" style="flex:1.4;min-width:260px;max-width:460px;width:100%;font-family:inherit">
+        <defs><clipPath id="cup"><polygon points="200,60 400,60 375,400 225,400"/></clipPath></defs>
+        <g clip-path="url(#cup)">
+          <rect x="180" y="283" width="240" height="120" fill="#D4537E"/>
+          <rect x="180" y="210" width="240" height="73" fill="#F3EBE3"/>
+          <rect x="180" y="142" width="240" height="68" fill="#85B7EB"/>
+          <line x1="180" y1="210" x2="420" y2="210" stroke="#B4B2A9" stroke-width="0.5"/>
+          <line x1="180" y1="283" x2="420" y2="283" stroke="#993556" stroke-width="0.5"/>
+        </g>
+        <polygon points="200,60 400,60 375,400 225,400" fill="none" stroke="#5F5E5A" stroke-width="1.5" stroke-linejoin="round"/>
+        <line x1="192" y1="60" x2="408" y2="60" stroke="#5F5E5A" stroke-width="3" stroke-linecap="round"/>
+        <g stroke="#888780" stroke-width="0.75" stroke-dasharray="3 3">
+          <line x1="397" y1="100" x2="450" y2="100"/><line x1="391" y1="176" x2="450" y2="176"/>
+          <line x1="386" y1="246" x2="450" y2="246"/><line x1="379" y1="341" x2="450" y2="341"/>
+        </g>
+        <g fill="#5F5E5A"><circle cx="391" cy="176" r="2"/><circle cx="386" cy="246" r="2"/><circle cx="379" cy="341" r="2"/></g>
+        <g font-size="20" font-weight="800" fill="#2b2a28">
+          <text x="458" y="96">Room to spare</text>
+          <text x="458" y="172">Coconut water · 26%</text>
+          <text x="458" y="242">Milk · 28%</text>
+          <text x="458" y="337">Frozen fruit · 46%</text>
+        </g>
+        <g font-size="17" fill="#77716a">
+          <text x="458" y="120">About 1/4 of the cup</text>
+          <text x="458" y="196">1.58 fl oz</text>
+          <text x="458" y="266">1.67 fl oz</text>
+          <text x="458" y="361">2.82 oz</text>
+          <text x="300" y="430" text-anchor="middle">8 oz cup · about 6 fl oz</text>
+        </g>
+      </svg>
+    </div>
   </div>
 
   <div class="card">
