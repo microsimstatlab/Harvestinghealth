@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Smoothie Shopping Calculator</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fdf8f3; --card:#ffffff; --ink:#2b2a28; --muted:#77716a; --line:#ece4da;
+    --berry:#c8385b; --berry-soft:#fbe7ec; --coco:#8a6a4f; --coco-soft:#f3ebe3;
+    --water:#2f8fa8; --water-soft:#e2f2f6; --ok:#2e8b57; --ok-soft:#e3f4ea; --warn:#b5651d; --warn-soft:#fbeedd;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Nunito,system-ui,sans-serif;font-size:16px;line-height:1.4}
+  .wrap{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+  h1{font-size:1.6rem;margin:4px 0 2px;font-weight:800}
+  .sub{color:var(--muted);margin:0 0 18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+  .card h2{font-size:1.05rem;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+  .hero{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
+  .field{display:flex;flex-direction:column;gap:4px;flex:1;min-width:130px}
+  label{font-size:.85rem;color:var(--muted);font-weight:600}
+  input[type=number]{font:inherit;font-size:1.05rem;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;width:100%}
+  input.big{font-size:1.8rem;font-weight:800;padding:8px 12px}
+  input:focus{outline:2px solid var(--berry);outline-offset:1px}
+  .quick{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  button{font:inherit;font-weight:700;border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;cursor:pointer;color:var(--ink)}
+  button:hover{border-color:var(--berry);color:var(--berry)}
+  .need{font-size:1.4rem;font-weight:800;margin:2px 0 8px}
+  .need small{font-size:.9rem;font-weight:600;color:var(--muted)}
+  .fruit{border-left:6px solid var(--berry)} .milk{border-left:6px solid var(--coco)} .water{border-left:6px solid var(--water)}
+  table{width:100%;border-collapse:collapse;font-size:.95rem}
+  th{text-align:left;color:var(--muted);font-size:.8rem;font-weight:700;padding:6px 6px;border-bottom:1px solid var(--line)}
+  td{padding:8px 6px;border-bottom:1px solid var(--line)}
+  td.num{font-weight:800;font-size:1.05rem}
+  .pill{display:inline-block;padding:4px 10px;border-radius:999px;font-weight:700;font-size:.9rem}
+  .pill.ok{background:var(--ok-soft);color:var(--ok)} .pill.warn{background:var(--warn-soft);color:var(--warn)}
+  .row{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}
+  .cart-item{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line)}
+  .cart-item span{flex:1}
+  .x{padding:2px 10px}
+  .bar{height:12px;background:var(--line);border-radius:999px;overflow:hidden;margin:8px 0 4px}
+  .bar div{height:100%;background:var(--berry);transition:width .2s}
+  .bar.done div{background:var(--ok)}
+  details summary{cursor:pointer;font-weight:700}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:10px}
+  .muted{color:var(--muted);font-size:.88rem}
+  button.on{background:var(--berry);border-color:var(--berry);color:#fff}
+  .per{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  .guide{background:#fffbea;border-color:#f1e2a6}
+  .guide b{color:#7a5a00}
+  .list{margin:0;padding-left:20px}
+  .list li{margin:4px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p style="margin:0 0 10px"><a href="index.html#tools" style="color:#2c5c39;font-weight:700;text-decoration:none">← Harvesting Health</a></p>
+  <h1>🍓 Smoothie Shopping Calculator</h1>
+  <p class="sub">Enter how many smoothies you need. The calculator tells you what to buy, whatever bag sizes the store has.</p>
+
+  <div class="card guide">
+    <h2>📋 Shopping guide: what to buy</h2>
+    <ul class="list">
+      <li>🍓 <b>Frozen fruit:</b> must be <b>ORGANIC</b></li>
+      <li>💧 <b>Coconut water:</b> <b>100% coconut water</b>. Check the ingredients: <b>NO SUGAR ADDED</b></li>
+      <li>🥛 <b>Alternative milk:</b> <b>SOY</b> (preferred, for its protein) or <b>coconut milk</b></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🥤 Amount per smoothie</h2>
+    <label>Smoothie size</label>
+    <div class="quick sizes" id="sizes" style="margin:4px 0 12px"></div>
+    <div class="per">
+      <ul class="list" style="flex:1;min-width:200px">
+        <li>🍓 <b>Organic frozen fruit:</b> <span style="white-space:nowrap" id="pf"></span></li>
+        <li>🥛 <b>Milk (soy or coconut):</b> <span style="white-space:nowrap" id="pm"></span></li>
+        <li>💧 <b>100% coconut water:</b> <span style="white-space:nowrap" id="pw"></span></li>
+        <li class="muted" id="ptot"></li>
+      </ul>
+      <svg viewBox="185 45 485 400" role="img" aria-label="A cup about three-quarters full: frozen fruit 46% at the bottom, milk 28% in the middle, coconut water 26% on top" style="flex:1.4;min-width:260px;max-width:460px;width:100%;font-family:inherit">
+        <defs><clipPath id="cup"><polygon points="200,60 400,60 375,400 225,400"/></clipPath></defs>
+        <g clip-path="url(#cup)">
+          <rect x="180" y="283" width="240" height="120" fill="#D4537E"/>
+          <rect x="180" y="210" width="240" height="73" fill="#F3EBE3"/>
+          <rect x="180" y="142" width="240" height="68" fill="#85B7EB"/>
+          <line x1="180" y1="210" x2="420" y2="210" stroke="#B4B2A9" stroke-width="0.5"/>
+          <line x1="180" y1="283" x2="420" y2="283" stroke="#993556" stroke-width="0.5"/>
+        </g>
+        <polygon points="200,60 400,60 375,400 225,400" fill="none" stroke="#5F5E5A" stroke-width="1.5" stroke-linejoin="round"/>
+        <line x1="192" y1="60" x2="408" y2="60" stroke="#5F5E5A" stroke-width="3" stroke-linecap="round"/>
+        <g stroke="#888780" stroke-width="0.75" stroke-dasharray="3 3">
+          <line x1="397" y1="100" x2="450" y2="100"/><line x1="391" y1="176" x2="450" y2="176"/>
+          <line x1="386" y1="246" x2="450" y2="246"/><line x1="379" y1="341" x2="450" y2="341"/>
+        </g>
+        <g fill="#5F5E5A"><circle cx="391" cy="176" r="2"/><circle cx="386" cy="246" r="2"/><circle cx="379" cy="341" r="2"/></g>
+        <g font-size="20" font-weight="800" fill="#2b2a28">
+          <text x="458" y="96">Leave room at top</text>
+          <text x="458" y="172">Coconut water · 26%</text>
+          <text x="458" y="242">Milk · 28%</text>
+          <text x="458" y="337">Frozen fruit · 46%</text>
+        </g>
+        <g font-size="17" fill="#77716a">
+          <text x="458" y="120">Don't fill to the brim</text>
+          <text x="458" y="196" id="lw"></text>
+          <text x="458" y="266" id="lm"></text>
+          <text x="458" y="361" id="lf"></text>
+          <text x="300" y="430" text-anchor="middle" id="cap"></text>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="hero">
+      <div class="field" style="flex:2">
+        <label for="count">How many smoothies?</label>
+        <input id="count" class="big" type="number" min="1" step="1" value="100" inputmode="numeric">
+      </div>
+      <div class="field">
+        <label for="buffer">Extra buffer (%)</label>
+        <input id="buffer" type="number" min="0" step="5" value="10" inputmode="numeric">
+      </div>
+    </div>
+    <div class="quick" id="quick"></div>
+    <p class="muted" style="margin:10px 0 0">The buffer covers spills, the blender, and seconds. Set it to 0 for exact amounts.</p>
+  </div>
+
+  <div class="card">
+    <h2>🛒 Shopping list</h2>
+    <ul class="list" id="summary"></ul>
+  </div>
+
+  <div class="card fruit">
+    <h2>🍓 Frozen fruit</h2>
+    <div class="need" id="fruitNeed"></div>
+    <p class="muted" style="margin:0 0 8px">If every bag is the same size, buy this many:</p>
+    <table>
+      <thead><tr><th>Bag size</th><th>Bags to buy</th><th>Leftover</th></tr></thead>
+      <tbody id="fruitTable"></tbody>
+    </table>
+    <div class="row" style="margin-top:10px">
+      <div class="field"><label for="customBag">Other bag size (oz)</label><input id="customBag" type="number" min="1" step="0.5" placeholder="e.g. 14" inputmode="decimal"></div>
+      <button id="addSize">Add size</button>
+    </div>
+  </div>
+
+  <div class="card fruit">
+    <h2>🧺 Mixing bag sizes? Track your cart</h2>
+    <p class="muted" style="margin:0 0 8px">Add bags as you put them in the cart. The bar shows how much fruit you still need.</p>
+    <div class="row">
+      <div class="field"><label for="cartSize">Bag size (oz)</label><input id="cartSize" type="number" min="1" step="0.5" value="16" inputmode="decimal"></div>
+      <div class="field"><label for="cartQty">How many</label><input id="cartQty" type="number" min="1" step="1" value="1" inputmode="numeric"></div>
+      <button id="addCart">Add to cart</button>
+    </div>
+    <div id="cartList" style="margin-top:8px"></div>
+    <div class="bar" id="cartBar"><div></div></div>
+    <div id="cartStatus"></div>
+  </div>
+
+  <div class="card milk">
+    <h2>🥛 Alternative milk <span class="muted" style="font-weight:600">(soy preferred, or coconut)</span></h2>
+    <div class="need" id="milkNeed"></div>
+    <div id="milkBuy"></div>
+  </div>
+
+  <div class="card water">
+    <h2>💧 Coconut water</h2>
+    <div class="need" id="waterNeed"></div>
+    <div id="waterBuy"></div>
+  </div>
+
+  <div class="card">
+    <details>
+      <summary>⚙️ Recipe and carton sizes</summary>
+      <p class="muted">Change these if your recipe or the carton sizes you usually buy are different. They are saved on this device.</p>
+      <div class="grid3">
+        <div class="field"><label for="perFruit">Fruit per smoothie (oz)</label><input id="perFruit" type="number" step="0.01" value="2.82" inputmode="decimal"></div>
+        <div class="field"><label for="perMilk">Milk per smoothie (fl oz)</label><input id="perMilk" type="number" step="0.01" value="1.67" inputmode="decimal"></div>
+        <div class="field"><label for="perWater">Coconut water per smoothie (fl oz)</label><input id="perWater" type="number" step="0.01" value="1.58" inputmode="decimal"></div>
+        <div class="field"><label for="milkSize">Milk carton (fl oz)</label><input id="milkSize" type="number" step="0.1" value="64" inputmode="decimal"></div>
+        <div class="field"><label for="waterSize">Coconut water carton (fl oz)</label><input id="waterSize" type="number" step="0.1" value="33.8" inputmode="decimal"></div>
+      </div>
+      <p class="muted">Common sizes: half-gallon carton = 64 fl oz · quart = 32 fl oz · 1 liter = 33.8 fl oz · can of coconut milk = 13.5 fl oz.</p>
+      <button id="reset" style="margin-top:6px">Reset to defaults</button>
+    </details>
+  </div>
+</div>
+
+<script>
+const DEFAULTS = {count:100, buffer:10, perFruit:2.82, perMilk:1.67, perWater:1.58, milkSize:64, waterSize:33.8,
+  bagSizes:[10,12,16,24,32,48], cart:[], size:0};
+const SIZES = [[2,'2 oz'],[3,'3 oz'],[4,'4 oz'],[5,'5 oz'],[0,'Standard (~6 oz)']];
+const KEY = 'smoothie-calc-v1';
+let state = load();
+
+function load(){
+  try{ const s = JSON.parse(localStorage.getItem(KEY)); if(s) return Object.assign({}, DEFAULTS, s); }catch(e){}
+  return JSON.parse(JSON.stringify(DEFAULTS));
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+
+const $ = id => document.getElementById(id);
+const fields = ['count','buffer','perFruit','perMilk','perWater','milkSize','waterSize'];
+const fmt = (n, d=1) => (Math.round(n*10**d)/10**d).toLocaleString();
+const lb = oz => fmt(oz/16, 1) + ' lb';
+const gal = floz => floz >= 128 ? fmt(floz/128, 2) + ' gal' : fmt(floz/8, 1) + ' cups';
+
+function num(id){ const v = parseFloat($(id).value); return isFinite(v) && v >= 0 ? v : 0; }
+
+function render(){
+  fields.forEach(f => state[f] = num(f));
+  const base = state.perFruit + state.perMilk + state.perWater;
+  const k = state.size && base ? state.size / base : 1;
+  const pF = state.perFruit*k, pM = state.perMilk*k, pW = state.perWater*k, tot = pF+pM+pW;
+  $('pf').textContent = fmt(pF,2) + ' oz'; $('pm').textContent = fmt(pM,2) + ' fl oz'; $('pw').textContent = fmt(pW,2) + ' fl oz';
+  $('lf').textContent = fmt(pF,2) + ' oz'; $('lm').textContent = fmt(pM,2) + ' fl oz'; $('lw').textContent = fmt(pW,2) + ' fl oz';
+  $('ptot').textContent = state.size ? `${fmt(tot)} fl oz total. Same recipe, scaled down. Use a cup bigger than ${fmt(tot)} oz so it's not full.` : `About ${fmt(tot)} fl oz total. Fills an 8 oz cup about ¾ of the way.`;
+  $('cap').textContent = state.size ? `${fmt(tot)} fl oz smoothie · same ratio` : `8 oz cup · about ${fmt(tot)} fl oz`;
+  $('sizes').querySelectorAll('button').forEach(b => b.classList.toggle('on', +b.dataset.s === state.size));
+  const n = state.count * (1 + state.buffer/100);
+  const fruit = n * pF, milk = n * pM, water = n * pW;
+  const bufNote = state.buffer > 0 ? ` <small>(includes ${state.buffer}% extra)</small>` : '';
+
+  // Fruit
+  $('fruitNeed').innerHTML = `${fmt(fruit)} oz <small>· ${lb(fruit)}</small>${bufNote}`;
+  const sizes = [...new Set(state.bagSizes)].sort((a,b)=>a-b);
+  $('fruitTable').innerHTML = sizes.map(s => {
+    const bags = Math.ceil(fruit / s - 1e-9);
+    return `<tr><td>${s} oz bag</td><td class="num">${bags}</td><td class="muted">${fmt(bags*s - fruit)} oz</td>
+      <td style="text-align:right"><button class="x" data-rm="${s}" title="Remove size">×</button></td></tr>`;
+  }).join('');
+
+  // Cart
+  const have = state.cart.reduce((t,c)=>t + c.size*c.qty, 0);
+  $('cartList').innerHTML = state.cart.length ? state.cart.map((c,i) =>
+    `<div class="cart-item"><span>${c.qty} × ${c.size} oz bag${c.qty>1?'s':''} = <b>${fmt(c.size*c.qty)} oz</b></span>
+     <button class="x" data-cart="${i}">×</button></div>`).join('') : '<p class="muted">No bags added yet.</p>';
+  const pct = fruit > 0 ? Math.min(100, have/fruit*100) : 0;
+  $('cartBar').className = 'bar' + (have >= fruit && fruit > 0 ? ' done' : '');
+  $('cartBar').firstElementChild.style.width = pct + '%';
+  if(fruit <= 0) $('cartStatus').innerHTML = '';
+  else if(have >= fruit) $('cartStatus').innerHTML = `<span class="pill ok">✓ Enough fruit: ${fmt(have)} of ${fmt(fruit)} oz (${fmt(have-fruit)} oz extra)</span>`;
+  else {
+    const short = fruit - have;
+    const tips = sizes.map(s => `${Math.ceil(short/s - 1e-9)} × ${s} oz`).slice(0,4).join(' or ');
+    $('cartStatus').innerHTML = `<span class="pill warn">Still need ${fmt(short)} oz</span><p class="muted" style="margin:6px 0 0">That's about ${tips}.</p>`;
+  }
+
+  // Milk & water
+  const carton = (need, size, label) => {
+    if(!size) return '<p class="muted">Set a carton size under Recipe and carton sizes.</p>';
+    const c = Math.ceil(need/size - 1e-9);
+    return `<p style="margin:0">Buy <b style="font-size:1.3rem">${c}</b> ${label}${c===1?'':'s'} (${fmt(size)} fl oz each)
+      <span class="muted"> · about ${fmt(c*size - need)} fl oz left over</span></p>
+      <p class="muted" style="margin:4px 0 0">One ${label} makes about ${Math.floor(size/(need/n||1))} smoothies at this size.</p>`;
+  };
+  $('milkNeed').innerHTML = `${fmt(milk)} fl oz <small>· ${gal(milk)}</small>${bufNote}`;
+  $('milkBuy').innerHTML = carton(milk, state.milkSize, 'carton');
+  $('waterNeed').innerHTML = `${fmt(water)} fl oz <small>· ${gal(water)}</small>${bufNote}`;
+  $('waterBuy').innerHTML = carton(water, state.waterSize, 'carton');
+
+  // Summary
+  const mc = state.milkSize ? Math.ceil(milk/state.milkSize - 1e-9) : '?';
+  const wc = state.waterSize ? Math.ceil(water/state.waterSize - 1e-9) : '?';
+  $('summary').innerHTML = `
+    <li>🍓 <b>${fmt(fruit)} oz organic frozen fruit</b> (${lb(fruit)}), any mix of bags</li>
+    <li>🥛 <b>${mc} soy or coconut milk carton${mc===1?'':'s'}</b> (${fmt(state.milkSize)} fl oz)</li>
+    <li>💧 <b>${wc} coconut water carton${wc===1?'':'s'}</b> (${fmt(state.waterSize)} fl oz, 100%, no sugar added)</li>
+    <li class="muted">Makes ${state.count.toLocaleString()} × ${fmt(tot)} fl oz smoothies${state.buffer?` + ${state.buffer}% buffer`:''}</li>`;
+  save();
+}
+
+function fill(){ fields.forEach(f => $(f).value = state[f]); }
+
+$('quick').innerHTML = [25,50,75,100,150,200,300].map(v=>`<button data-q="${v}">${v}</button>`).join('');
+$('quick').addEventListener('click', e => { const q = e.target.dataset.q; if(q){ $('count').value = q; render(); } });
+fields.forEach(f => $(f).addEventListener('input', render));
+$('sizes').innerHTML = SIZES.map(([v,l]) => `<button data-s="${v}">${l}</button>`).join('');
+$('sizes').addEventListener('click', e => { const v = e.target.dataset.s; if(v !== undefined){ state.size = +v; render(); } });
+
+$('addSize').addEventListener('click', () => {
+  const s = parseFloat($('customBag').value);
+  if(s > 0){ state.bagSizes.push(s); $('customBag').value=''; render(); }
+});
+$('fruitTable').addEventListener('click', e => {
+  const s = parseFloat(e.target.dataset.rm);
+  if(s){ state.bagSizes = state.bagSizes.filter(x => x !== s); render(); }
+});
+$('addCart').addEventListener('click', () => {
+  const size = parseFloat($('cartSize').value), qty = parseInt($('cartQty').value) || 1;
+  if(size > 0){ state.cart.push({size, qty}); $('cartQty').value = 1; render(); }
+});
+$('cartList').addEventListener('click', e => {
+  const i = e.target.dataset.cart;
+  if(i !== undefined){ state.cart.splice(+i, 1); render(); }
+});
+$('reset').addEventListener('click', () => { const cart = state.cart; state = JSON.parse(JSON.stringify(DEFAULTS)); state.cart = cart; fill(); render(); });
+
+fill(); render();
+</script>
+</body>
+</html>

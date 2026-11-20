@@ -3,302 +3,613 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Smoothie Shopping Calculator</title>
+<title>Harvesting Health</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#fdf8f3; --card:#ffffff; --ink:#2b2a28; --muted:#77716a; --line:#ece4da;
-    --berry:#c8385b; --berry-soft:#fbe7ec; --coco:#8a6a4f; --coco-soft:#f3ebe3;
-    --water:#2f8fa8; --water-soft:#e2f2f6; --ok:#2e8b57; --ok-soft:#e3f4ea; --warn:#b5651d; --warn-soft:#fbeedd;
+    --bg:#f8f6ef; --card:#fff; --ink:#26302a; --muted:#6c756e; --line:#e5e3d8;
+    --green:#3f7d4e; --green-d:#2c5c39; --green-soft:#e6f0e3; --leaf:#8fbf6a;
+    --macro:#e3893b; --macro-soft:#fcecdc; --micro:#3d86b5; --micro-soft:#e0eef7; --phyto:#8a4fa3; --phyto-soft:#f1e6f6;
   }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:Nunito,system-ui,sans-serif;font-size:16px;line-height:1.4}
-  .wrap{max-width:720px;margin:0 auto;padding:20px 16px 48px}
-  h1{font-size:1.6rem;margin:4px 0 2px;font-weight:800}
-  .sub{color:var(--muted);margin:0 0 18px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
-  .card h2{font-size:1.05rem;margin:0 0 10px;display:flex;align-items:center;gap:8px}
-  .hero{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
-  .field{display:flex;flex-direction:column;gap:4px;flex:1;min-width:130px}
-  label{font-size:.85rem;color:var(--muted);font-weight:600}
-  input[type=number]{font:inherit;font-size:1.05rem;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;width:100%}
-  input.big{font-size:1.8rem;font-weight:800;padding:8px 12px}
-  input:focus{outline:2px solid var(--berry);outline-offset:1px}
-  .quick{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
-  button{font:inherit;font-weight:700;border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;cursor:pointer;color:var(--ink)}
-  button:hover{border-color:var(--berry);color:var(--berry)}
-  .need{font-size:1.4rem;font-weight:800;margin:2px 0 8px}
-  .need small{font-size:.9rem;font-weight:600;color:var(--muted)}
-  .fruit{border-left:6px solid var(--berry)} .milk{border-left:6px solid var(--coco)} .water{border-left:6px solid var(--water)}
-  table{width:100%;border-collapse:collapse;font-size:.95rem}
-  th{text-align:left;color:var(--muted);font-size:.8rem;font-weight:700;padding:6px 6px;border-bottom:1px solid var(--line)}
-  td{padding:8px 6px;border-bottom:1px solid var(--line)}
-  td.num{font-weight:800;font-size:1.05rem}
-  .pill{display:inline-block;padding:4px 10px;border-radius:999px;font-weight:700;font-size:.9rem}
-  .pill.ok{background:var(--ok-soft);color:var(--ok)} .pill.warn{background:var(--warn-soft);color:var(--warn)}
-  .row{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}
-  .cart-item{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line)}
-  .cart-item span{flex:1}
-  .x{padding:2px 10px}
-  .bar{height:12px;background:var(--line);border-radius:999px;overflow:hidden;margin:8px 0 4px}
-  .bar div{height:100%;background:var(--berry);transition:width .2s}
-  .bar.done div{background:var(--ok)}
-  details summary{cursor:pointer;font-weight:700}
-  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:10px}
-  .muted{color:var(--muted);font-size:.88rem}
-  button.on{background:var(--berry);border-color:var(--berry);color:#fff}
-  .per{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-  .guide{background:#fffbea;border-color:#f1e2a6}
-  .guide b{color:#7a5a00}
-  .list{margin:0;padding-left:20px}
-  .list li{margin:4px 0}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Nunito,system-ui,sans-serif;font-size:16px;line-height:1.5}
+  a{color:var(--green-d)}
+  header{background:var(--green-d);color:#fff}
+  .top{max-width:1040px;margin:0 auto;padding:16px 16px 0;display:flex;align-items:center;gap:12px}
+  .logo{width:42px;height:42px;flex:none}
+  .brand{font-size:1.5rem;font-weight:800;letter-spacing:.2px;line-height:1.1}
+  .tagline{font-size:.88rem;opacity:.85}
+  nav{max-width:1040px;margin:0 auto;padding:10px 8px 0;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+  nav::-webkit-scrollbar{display:none}
+  nav a{color:#fff;text-decoration:none;font-weight:700;padding:10px 14px;border-radius:12px 12px 0 0;white-space:nowrap;opacity:.85}
+  nav a:hover{opacity:1;background:rgba(255,255,255,.1)}
+  nav a.on{background:var(--bg);color:var(--green-d);opacity:1}
+  main{max-width:1040px;margin:0 auto;padding:22px 16px 48px}
+  section{display:none} section.on{display:block}
+  h1{font-size:1.7rem;margin:0 0 6px;font-weight:800}
+  h2{font-size:1.2rem;margin:0 0 8px}
+  .lead{color:var(--muted);margin:0 0 20px;max-width:720px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+  .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+  .tile{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;text-decoration:none;color:inherit;display:block;transition:transform .15s,border-color .15s}
+  .tile:hover{transform:translateY(-2px);border-color:var(--leaf)}
+  .tile .ic{font-size:2rem}
+  .tile h3{margin:6px 0 4px;font-size:1.08rem}
+  .tile p{margin:0;color:var(--muted);font-size:.93rem}
+  .hero{background:var(--green-soft);border:1px solid #cfe1c9;border-radius:20px;padding:24px;margin-bottom:22px}
+  .hero h1{color:var(--green-d)}
+  .btn{display:inline-block;background:var(--green);color:#fff;text-decoration:none;font-weight:700;border:none;border-radius:999px;padding:9px 16px;font:inherit;font-weight:700;cursor:pointer}
+  .btn:hover{background:var(--green-d)}
+  .btn.ghost{background:#fff;color:var(--green-d);border:1px solid var(--line)}
+  .tag{display:inline-block;background:var(--green-soft);color:var(--green-d);font-size:.8rem;font-weight:700;border-radius:999px;padding:2px 10px;margin:0 6px 6px 0}
+  .muted{color:var(--muted);font-size:.9rem}
+  .note{background:#fffbea;border:1px solid #f1e2a6;border-radius:12px;padding:10px 14px;font-size:.9rem;margin-top:18px}
+  /* wheel */
+  .wheelwrap{display:grid;grid-template-columns:minmax(280px,440px) 1fr;gap:22px;align-items:start}
+  @media (max-width:760px){.wheelwrap{grid-template-columns:1fr}}
+  #nwheel path{cursor:pointer;stroke:#fff;stroke-width:2;transition:opacity .15s}
+  #nwheel path:hover{opacity:.85}
+  #nwheel text{pointer-events:none;font-family:Nunito,sans-serif;font-weight:800}
+  #nwheel .dim{opacity:.35}
+  .panel h2{display:flex;align-items:center;gap:8px}
+  .chip{display:inline-block;border:1px solid var(--line);background:#fff;border-radius:999px;padding:2px 10px;margin:2px 4px 2px 0;font-size:.85rem}
+  button.chip{cursor:pointer;font:inherit;font-size:.85rem;color:var(--green-d);border-color:#cfe1c9;background:var(--green-soft);font-weight:700}
+  .ex{border-top:1px solid var(--line);padding:12px 0}
+  .ex:first-of-type{border-top:none}
+  .ex h4{margin:0 0 2px;font-size:1rem}
+  .ex p{margin:0 0 6px;font-size:.93rem}
+  .subnav{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 4px}
+  .subnav button{font:inherit;font-size:.85rem;font-weight:700;border-radius:999px;padding:4px 12px;cursor:pointer;border:1px solid var(--line);background:#fff}
+  /* foods */
+  .filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:16px}
+  .filters input{font:inherit;padding:9px 14px;border:1px solid var(--line);border-radius:999px;min-width:220px;flex:1;max-width:340px}
+  .filters button{font:inherit;font-weight:700;font-size:.9rem;border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;cursor:pointer}
+  .filters button.on{background:var(--green);color:#fff;border-color:var(--green)}
+  .foodgrid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+  .food{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;text-align:center;cursor:pointer;font:inherit;color:inherit;transition:transform .15s,border-color .15s}
+  .food:hover{transform:translateY(-2px);border-color:var(--leaf)}
+  .food .pic{width:84px;height:84px;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:58px}
+  .food .pic img,.fd .pic img{width:100%;height:100%;object-fit:cover;border-radius:12px}
+  .food b{display:block;font-size:.98rem}
+  .food span{font-size:.8rem;color:var(--muted)}
+  .fd{display:grid;grid-template-columns:200px 1fr;gap:22px}
+  @media (max-width:640px){.fd{grid-template-columns:1fr}}
+  .fd .pic{width:180px;height:180px;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:120px;background:var(--green-soft);border-radius:24px}
+  .nut{border-radius:14px;padding:12px 14px;margin:10px 0}
+  .nut h3{margin:0 0 6px;font-size:1rem;display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .nut h3 button{font:inherit;font-size:.78rem;font-weight:700;background:none;border:none;cursor:pointer;text-decoration:underline}
+  .nut.m{background:var(--macro-soft)} .nut.m h3, .nut.m h3 button{color:#9a5212}
+  .nut.i{background:var(--micro-soft)} .nut.i h3, .nut.i h3 button{color:#1f5a80}
+  .nut.p{background:var(--phyto-soft)} .nut.p h3, .nut.p h3 button{color:#62337a}
+  .nut ul{margin:0;padding-left:20px} .nut li{margin:2px 0}
+  .tipbox{background:var(--green-soft);border-radius:14px;padding:12px 14px;margin-top:10px}
+  /* lists */
+  .res{display:grid;gap:12px}
+  .res a.link{display:block;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;text-decoration:none;color:inherit}
+  .res a.link:hover{border-color:var(--leaf)}
+  .res a.link b{color:var(--green-d)}
+  .topic{margin:22px 0 10px;font-size:1.1rem}
+  .step{font-weight:800;color:var(--green-d);font-size:.85rem;text-transform:uppercase;letter-spacing:.5px;margin:0 0 6px}
+  .pickgrp{margin:8px 0}
+  .pickgrp b{display:block;font-size:.85rem;color:var(--muted);margin-bottom:4px}
+  .pk{font:inherit;font-size:.9rem;font-weight:700;border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 12px;margin:0 6px 6px 0;cursor:pointer}
+  .pk.on{background:var(--green);border-color:var(--green);color:#fff}
+  .flt{font:inherit;font-weight:700;border:2px solid var(--line);background:#fff;border-radius:12px;padding:8px 12px;cursor:pointer;text-align:left}
+  .flt small{display:block;font-weight:400;color:var(--muted);font-size:.78rem}
+  .flt.on{border-color:var(--green);background:var(--green-soft)}
+  .rgrid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));margin-top:12px}
+  .rc{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;cursor:pointer;text-align:left;font:inherit;color:inherit}
+  .rc:hover{border-color:var(--leaf)}
+  .rc .em{font-size:2rem}
+  .rc h3{margin:4px 0;font-size:1.05rem}
+  .badge{display:inline-block;font-size:.72rem;font-weight:800;border-radius:999px;padding:2px 8px;margin:0 4px 4px 0}
+  .b-dash{background:#fde8e8;color:#9b2c2c} .b-lowgi{background:#e0eef7;color:#1f5a80} .b-med{background:#e6f0e3;color:#2c5c39}
+  .match{font-size:.85rem;color:var(--green-d);font-weight:700}
+  .need{font-size:.82rem;color:var(--muted)}
+  .rv{display:grid;grid-template-columns:1fr 300px;gap:20px}
+  @media (max-width:760px){.rv{grid-template-columns:1fr}}
+  .stepper{display:flex;align-items:center;gap:8px;margin:10px 0}
+  .stepper button{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:1.2rem;font-weight:800;cursor:pointer}
+  .stepper input{width:64px;text-align:center;font:inherit;font-size:1.1rem;font-weight:800;padding:6px;border:1px solid var(--line);border-radius:10px}
+  .ingl{padding-left:20px} .ingl li{margin:4px 0}
+  .ingl li.have{font-weight:700}
+  .stepsl{padding-left:22px} .stepsl li{margin:6px 0}
+  .nf{border:2px solid #111;padding:8px 10px;background:#fff;font-family:Helvetica,Arial,sans-serif;color:#111}
+  .nf h3{font-size:1.6rem;font-weight:900;margin:0;line-height:1}
+  .nf .row{display:flex;justify-content:space-between;border-top:1px solid #111;padding:3px 0;font-size:.9rem}
+  .nf .thick{border-top:8px solid #111} .nf .med{border-top:4px solid #111}
+  .nf .cal{font-size:1.5rem;font-weight:900}
+  .nf .ind{padding-left:14px}
+  .savebar{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 4px}
+  .toast{background:#26302a;color:#fff;border-radius:10px;padding:8px 12px;font-size:.9rem;margin-top:8px}
+  footer{max-width:1040px;margin:0 auto;padding:0 16px 32px;color:var(--muted);font-size:.85rem}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>🍓 Smoothie Shopping Calculator</h1>
-  <p class="sub">Enter how many smoothies you need. The calculator tells you what to buy, whatever bag sizes the store has.</p>
-
-  <div class="card guide">
-    <h2>📋 Shopping guide: what to buy</h2>
-    <ul class="list">
-      <li>🍓 <b>Frozen fruit:</b> must be <b>ORGANIC</b></li>
-      <li>💧 <b>Coconut water:</b> <b>100% coconut water</b>. Check the ingredients: <b>NO SUGAR ADDED</b></li>
-      <li>🥛 <b>Alternative milk:</b> <b>SOY</b> (preferred, for its protein) or <b>coconut milk</b></li>
-    </ul>
+<header>
+  <div class="top">
+    <svg class="logo" viewBox="0 0 48 48" aria-hidden="true">
+      <circle cx="24" cy="24" r="23" fill="#fff"/>
+      <path d="M24 38V20" stroke="#3f7d4e" stroke-width="3" stroke-linecap="round"/>
+      <path d="M24 24c-8 0-12-5-12-12 8 0 12 5 12 12z" fill="#8fbf6a"/>
+      <path d="M24 28c7 0 11-5 11-11-7 0-11 5-11 11z" fill="#3f7d4e"/>
+      <circle cx="18" cy="36" r="4" fill="#e3893b"/><circle cx="30" cy="36" r="4" fill="#c8385b"/>
+    </svg>
+    <div><div class="brand">Harvesting Health</div><div class="tagline">Nutrition to prevent chronic disease and live well</div></div>
   </div>
+  <nav id="nav">
+    <a href="#home">🏠 Home</a>
+    <a href="#wheel">🎡 Nutrient Wheel</a>
+    <a href="#foods">🍓 Food Dictionary</a>
+    <a href="#finder">🧑‍🍳 Recipe Finder</a>
+    <a href="#recipes">🍽️ Recipes</a>
+    <a href="#guides">🥦 Nutrient Guides</a>
+    <a href="#tools">🥤 Tools</a>
+    <a href="#resources">🔗 Trusted Resources</a>
+  </nav>
+</header>
 
-  <div class="card">
-    <h2>🥤 Amount per smoothie</h2>
-    <label>Smoothie size</label>
-    <div class="quick sizes" id="sizes" style="margin:4px 0 12px"></div>
-    <div class="per">
-      <ul class="list" style="flex:1;min-width:200px">
-        <li>🍓 <b>Organic frozen fruit:</b> <span style="white-space:nowrap" id="pf"></span></li>
-        <li>🥛 <b>Milk (soy or coconut):</b> <span style="white-space:nowrap" id="pm"></span></li>
-        <li>💧 <b>100% coconut water:</b> <span style="white-space:nowrap" id="pw"></span></li>
-        <li class="muted" id="ptot"></li>
-      </ul>
-      <svg viewBox="185 45 485 400" role="img" aria-label="A cup about three-quarters full: frozen fruit 46% at the bottom, milk 28% in the middle, coconut water 26% on top" style="flex:1.4;min-width:260px;max-width:460px;width:100%;font-family:inherit">
-        <defs><clipPath id="cup"><polygon points="200,60 400,60 375,400 225,400"/></clipPath></defs>
-        <g clip-path="url(#cup)">
-          <rect x="180" y="283" width="240" height="120" fill="#D4537E"/>
-          <rect x="180" y="210" width="240" height="73" fill="#F3EBE3"/>
-          <rect x="180" y="142" width="240" height="68" fill="#85B7EB"/>
-          <line x1="180" y1="210" x2="420" y2="210" stroke="#B4B2A9" stroke-width="0.5"/>
-          <line x1="180" y1="283" x2="420" y2="283" stroke="#993556" stroke-width="0.5"/>
-        </g>
-        <polygon points="200,60 400,60 375,400 225,400" fill="none" stroke="#5F5E5A" stroke-width="1.5" stroke-linejoin="round"/>
-        <line x1="192" y1="60" x2="408" y2="60" stroke="#5F5E5A" stroke-width="3" stroke-linecap="round"/>
-        <g stroke="#888780" stroke-width="0.75" stroke-dasharray="3 3">
-          <line x1="397" y1="100" x2="450" y2="100"/><line x1="391" y1="176" x2="450" y2="176"/>
-          <line x1="386" y1="246" x2="450" y2="246"/><line x1="379" y1="341" x2="450" y2="341"/>
-        </g>
-        <g fill="#5F5E5A"><circle cx="391" cy="176" r="2"/><circle cx="386" cy="246" r="2"/><circle cx="379" cy="341" r="2"/></g>
-        <g font-size="20" font-weight="800" fill="#2b2a28">
-          <text x="458" y="96">Leave room at top</text>
-          <text x="458" y="172">Coconut water · 26%</text>
-          <text x="458" y="242">Milk · 28%</text>
-          <text x="458" y="337">Frozen fruit · 46%</text>
-        </g>
-        <g font-size="17" fill="#77716a">
-          <text x="458" y="120">Don't fill to the brim</text>
-          <text x="458" y="196" id="lw"></text>
-          <text x="458" y="266" id="lm"></text>
-          <text x="458" y="361" id="lf"></text>
-          <text x="300" y="430" text-anchor="middle" id="cap"></text>
-        </g>
-      </svg>
-    </div>
-  </div>
-
-  <div class="card">
+<main>
+  <section id="home">
     <div class="hero">
-      <div class="field" style="flex:2">
-        <label for="count">How many smoothies?</label>
-        <input id="count" class="big" type="number" min="1" step="1" value="100" inputmode="numeric">
-      </div>
-      <div class="field">
-        <label for="buffer">Extra buffer (%)</label>
-        <input id="buffer" type="number" min="0" step="5" value="10" inputmode="numeric">
-      </div>
+      <h1>Welcome to Harvesting Health</h1>
+      <p style="margin:0;max-width:720px">Practical, evidence-based nutrition resources to help prevent chronic diseases like heart disease, high blood pressure and type 2 diabetes, and to support a healthy lifestyle. Explore our handouts, learn what nutrients do, and find trusted resources from leading health organizations.</p>
     </div>
-    <div class="quick" id="quick"></div>
-    <p class="muted" style="margin:10px 0 0">The buffer covers spills, the blender, and seconds. Set it to 0 for exact amounts.</p>
-  </div>
-
-  <div class="card">
-    <h2>🛒 Shopping list</h2>
-    <ul class="list" id="summary"></ul>
-  </div>
-
-  <div class="card fruit">
-    <h2>🍓 Frozen fruit</h2>
-    <div class="need" id="fruitNeed"></div>
-    <p class="muted" style="margin:0 0 8px">If every bag is the same size, buy this many:</p>
-    <table>
-      <thead><tr><th>Bag size</th><th>Bags to buy</th><th>Leftover</th></tr></thead>
-      <tbody id="fruitTable"></tbody>
-    </table>
-    <div class="row" style="margin-top:10px">
-      <div class="field"><label for="customBag">Other bag size (oz)</label><input id="customBag" type="number" min="1" step="0.5" placeholder="e.g. 14" inputmode="decimal"></div>
-      <button id="addSize">Add size</button>
+    <div class="grid">
+      <a class="tile" href="#wheel"><div class="ic">🎡</div><h3>Nutrient Wheel</h3><p>Tap to learn about macronutrients, micronutrients and phytonutrients.</p></a>
+      <a class="tile" href="#foods"><div class="ic">🍓</div><h3>Food Dictionary</h3><p>See the nutrients in everyday fruits, vegetables and herbs.</p></a>
+      <a class="tile" href="#finder"><div class="ic">🧑‍🍳</div><h3>Recipe Finder</h3><p>Pick ingredients you have and get healthy recipe ideas you can scale and save.</p></a>
+      <a class="tile" href="#recipes"><div class="ic">🍽️</div><h3>Recipes</h3><p>Healthy recipes from our team and demo events.</p></a>
+      <a class="tile" href="#guides"><div class="ic">🥦</div><h3>Nutrient Guides</h3><p>Handouts explaining key nutrients and where to find them.</p></a>
+      <a class="tile" href="#tools"><div class="ic">🥤</div><h3>Tools</h3><p>The smoothie shopping calculator for demo events.</p></a>
+      <a class="tile" href="#resources"><div class="ic">🔗</div><h3>Trusted Resources</h3><p>DASH, the American Diabetes Association and other trusted sites.</p></a>
     </div>
-  </div>
+  </section>
 
-  <div class="card fruit">
-    <h2>🧺 Mixing bag sizes? Track your cart</h2>
-    <p class="muted" style="margin:0 0 8px">Add bags as you put them in the cart. The bar shows how much fruit you still need.</p>
-    <div class="row">
-      <div class="field"><label for="cartSize">Bag size (oz)</label><input id="cartSize" type="number" min="1" step="0.5" value="16" inputmode="decimal"></div>
-      <div class="field"><label for="cartQty">How many</label><input id="cartQty" type="number" min="1" step="1" value="1" inputmode="numeric"></div>
-      <button id="addCart">Add to cart</button>
+  <section id="wheel">
+    <h1>Nutrient Wheel</h1>
+    <p class="lead">Food gives us three kinds of nutrients. Tap any part of the wheel to learn what it is, why it matters, and which foods have it.</p>
+    <div class="wheelwrap">
+      <div class="card" style="padding:10px"><svg id="nwheel" viewBox="0 0 440 440" role="img" aria-label="Nutrient wheel with macronutrients, micronutrients and phytonutrients"></svg></div>
+      <div class="card panel" id="panel"></div>
     </div>
-    <div id="cartList" style="margin-top:8px"></div>
-    <div class="bar" id="cartBar"><div></div></div>
-    <div id="cartStatus"></div>
-  </div>
+  </section>
 
-  <div class="card milk">
-    <h2>🥛 Alternative milk <span class="muted" style="font-weight:600">(soy preferred, or coconut)</span></h2>
-    <div class="need" id="milkNeed"></div>
-    <div id="milkBuy"></div>
-  </div>
+  <section id="foods">
+    <h1>Food Dictionary</h1>
+    <p class="lead">Tap a food to see its macronutrients, micronutrients and phytonutrients, why they matter, and a kitchen tip.</p>
+    <div id="foodview"></div>
+  </section>
 
-  <div class="card water">
-    <h2>💧 Coconut water</h2>
-    <div class="need" id="waterNeed"></div>
-    <div id="waterBuy"></div>
-  </div>
+  <section id="finder">
+    <h1>Recipe Finder</h1>
+    <p class="lead">Pick the ingredients you have. We'll suggest healthy recipes that use them. Choose a recipe to scale it to your portion, see nutrition facts, and save it.</p>
+    <div id="finderview"></div>
+  </section>
 
-  <div class="card">
-    <details>
-      <summary>⚙️ Recipe and carton sizes</summary>
-      <p class="muted">Change these if your recipe or the carton sizes you usually buy are different. They are saved on this device.</p>
-      <div class="grid3">
-        <div class="field"><label for="perFruit">Fruit per smoothie (oz)</label><input id="perFruit" type="number" step="0.01" value="2.82" inputmode="decimal"></div>
-        <div class="field"><label for="perMilk">Milk per smoothie (fl oz)</label><input id="perMilk" type="number" step="0.01" value="1.67" inputmode="decimal"></div>
-        <div class="field"><label for="perWater">Coconut water per smoothie (fl oz)</label><input id="perWater" type="number" step="0.01" value="1.58" inputmode="decimal"></div>
-        <div class="field"><label for="milkSize">Milk carton (fl oz)</label><input id="milkSize" type="number" step="0.1" value="64" inputmode="decimal"></div>
-        <div class="field"><label for="waterSize">Coconut water carton (fl oz)</label><input id="waterSize" type="number" step="0.1" value="33.8" inputmode="decimal"></div>
-      </div>
-      <p class="muted">Common sizes: half-gallon carton = 64 fl oz · quart = 32 fl oz · 1 liter = 33.8 fl oz · can of coconut milk = 13.5 fl oz.</p>
-      <button id="reset" style="margin-top:6px">Reset to defaults</button>
-    </details>
-  </div>
-</div>
+  <section id="recipes">
+    <h1>Recipes</h1>
+    <p class="lead">Healthy recipes created by the Harvesting Health team.</p>
+    <div class="grid" id="recipelist"></div>
+  </section>
 
+  <section id="guides">
+    <h1>Nutrient Guides</h1>
+    <p class="lead">Handouts explaining key nutrients and where to find them in food.</p>
+    <div class="grid" id="guidelist"></div>
+  </section>
+
+  <section id="tools">
+    <h1>Tools</h1>
+    <p class="lead">Helpful tools for our programs and events.</p>
+    <div class="grid">
+      <a class="tile" href="smoothie.html"><div class="ic">🥤</div><h3>Smoothie Shopping Calculator</h3><p>Enter how many smoothies you need. The calculator tells you how much fruit, milk and coconut water to buy, whatever bag sizes the store has.</p></a>
+    </div>
+  </section>
+
+  <section id="resources">
+    <h1>Trusted Resources</h1>
+    <p class="lead">Free, public information from government agencies and leading health associations.</p>
+    <div id="reslist"></div>
+  </section>
+</main>
+<footer>Harvesting Health provides general nutrition education, not medical advice. Talk with your doctor or a registered dietitian about your own health needs. Nutrient information is based on the USDA FoodData Central database, NIH Office of Dietary Supplements fact sheets, the Linus Pauling Institute Micronutrient Information Center, and standard nutrition textbooks.</footer>
+
+<script src="data.js"></script>
+<script src="recipes.js"></script>
 <script>
-const DEFAULTS = {count:100, buffer:10, perFruit:2.82, perMilk:1.67, perWater:1.58, milkSize:64, waterSize:33.8,
-  bagSizes:[10,12,16,24,32,48], cart:[], size:0};
-const SIZES = [[2,'2 oz'],[3,'3 oz'],[4,'4 oz'],[5,'5 oz'],[0,'Standard (~6 oz)']];
-const KEY = 'smoothie-calc-v1';
-let state = load();
-
-function load(){
-  try{ const s = JSON.parse(localStorage.getItem(KEY)); if(s) return Object.assign({}, DEFAULTS, s); }catch(e){}
-  return JSON.parse(JSON.stringify(DEFAULTS));
-}
-function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
-
 const $ = id => document.getElementById(id);
-const fields = ['count','buffer','perFruit','perMilk','perWater','milkSize','waterSize'];
-const fmt = (n, d=1) => (Math.round(n*10**d)/10**d).toLocaleString();
-const lb = oz => fmt(oz/16, 1) + ' lb';
-const gal = floz => floz >= 128 ? fmt(floz/128, 2) + ' gal' : fmt(floz/8, 1) + ' cups';
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
-function num(id){ const v = parseFloat($(id).value); return isFinite(v) && v >= 0 ? v : 0; }
+/* ---------------- Nutrient wheel content ---------------- */
+const N = {
+  macro:{name:"Macronutrients",short:"Macro",icon:"⚡",color:"#e3893b",soft:"#fcecdc",kids:["carbs","protein","fats"],
+    what:"Nutrients your body needs in large amounts, measured in grams. They give you energy (calories) and the building blocks for muscles, organs and cells.",
+    why:"Carbohydrates and protein have 4 calories per gram, and fat has 9. Water is also needed in large amounts, even though it has no calories. The quality of each macronutrient, like whole grains versus refined grains or unsaturated versus saturated fat, matters for preventing chronic disease."},
+  carbs:{name:"Carbohydrates",icon:"🌾",parent:"macro",
+    what:"Your body's main source of energy, especially for your brain and muscles.",
+    why:"Choosing whole, high-fiber carbohydrates over refined grains and added sugars helps keep blood sugar steady and lowers the risk of heart disease and type 2 diabetes.",
+    ex:[{n:"Fiber",d:"Supports digestion, keeps you full, and helps lower blood sugar spikes and cholesterol. Most adults don't eat enough.",f:["Blackberry","Avocado","Beans and lentils","Oats and whole grains","Onion"]},
+        {n:"Starches",d:"Complex carbohydrates that break down into glucose for energy. Choose whole and minimally processed.",f:["Whole grains","Potatoes and sweet potatoes","Beans","Banana"]},
+        {n:"Sugars",d:"Natural sugars come packaged with fiber and nutrients in fruit and milk. Limit added sugars in sweets and sugary drinks.",f:["Strawberry","Pineapple","Banana","Coconut water"]}]},
+  protein:{name:"Protein",icon:"💪",parent:"macro",
+    what:"Builds and repairs muscles, skin and organs, and makes enzymes, hormones and immune cells.",
+    why:"Protein is made of 20 amino acids, and 9 of them are essential, meaning you must get them from food. Plant proteins like soy and beans also bring fiber and phytonutrients.",
+    ex:[{n:"Plant proteins",d:"Soy is a complete protein. Beans, lentils, nuts and seeds help meet protein needs with fiber included.",f:["Soy milk","Tofu","Beans and lentils","Nuts and seeds"]},
+        {n:"Animal proteins",d:"Complete proteins. Choose fish, poultry, eggs and low-fat dairy more often than processed meats.",f:["Fish","Chicken","Eggs","Yogurt"]}]},
+  fats:{name:"Fats",icon:"🫒",parent:"macro",
+    what:"A concentrated energy source that also helps your body absorb vitamins A, D, E and K and build cell membranes and hormones.",
+    why:"The type of fat matters most. Replacing saturated fat with unsaturated fat lowers LDL (\"bad\") cholesterol and the risk of heart disease.",
+    ex:[{n:"Monounsaturated fats",d:"Heart-healthy fats found in plant oils and foods.",f:["Extra virgin olive oil","Avocado","Nuts"]},
+        {n:"Polyunsaturated fats and omega-3s",d:"Essential fats your body can't make. Omega-3s support heart and brain health.",f:["Salmon and sardines","Walnuts","Ground flaxseed and chia seeds"]},
+        {n:"Saturated fats (limit)",d:"Raise LDL cholesterol when eaten in excess.",f:["Butter","Fatty and processed meats","Coconut oil"]},
+        {n:"Trans fats (avoid)",d:"The most harmful type of fat. Artificial trans fats have been removed from the U.S. food supply, but check labels for \"partially hydrogenated oils.\"",f:[]}]},
+  micro:{name:"Micronutrients",short:"Micro",icon:"🔹",color:"#3d86b5",soft:"#e0eef7",kids:["vitamins","minerals"],
+    what:"Vitamins and minerals your body needs in small amounts, measured in milligrams or micrograms. They don't provide calories.",
+    why:"Micronutrients help turn food into energy and support strong bones, healthy blood, immunity and nerve function. Eating a variety of colorful whole foods is the best way to get them."},
+  vitamins:{name:"Vitamins",icon:"💊",parent:"micro",
+    what:"Organic compounds that help your body grow, heal and turn food into energy.",
+    why:"Fat-soluble vitamins (A, D, E, K) are stored in the body and absorbed best with some fat. Water-soluble vitamins (C and the B vitamins) need to be replenished often.",
+    ex:[{n:"Vitamin A",d:"Fat-soluble. Vision, immunity and skin. Plants provide beta-carotene, which the body turns into vitamin A.",f:["Carrots","Sweet potatoes","Basil","Cilantro","Tomato"]},
+        {n:"Vitamin D",d:"Fat-soluble. Helps absorb calcium for strong bones. Made in skin with sunlight.",f:["Soy milk","Fortified milk","Salmon","Eggs"]},
+        {n:"Vitamin E",d:"Fat-soluble. An antioxidant that protects cells.",f:["Extra virgin olive oil","Avocado","Nuts and seeds"]},
+        {n:"Vitamin K",d:"Fat-soluble. Needed for blood clotting and bone health. If you take the blood thinner warfarin, keep your vitamin K intake consistent and ask your doctor.",f:["Basil","Cilantro","Leafy greens","Blackberry","Blueberry"]},
+        {n:"Vitamin C",d:"Water-soluble. Supports immunity, collagen for skin and wound healing, and absorption of iron from plants.",f:["Strawberry","Pineapple","Tomato","Citrus","Bell peppers"]},
+        {n:"B vitamins",d:"Water-soluble. Help turn food into energy. Folate supports cell growth, and B12 (found in animal foods and fortified foods) supports nerves and blood.",f:["Avocado","Banana","Beans","Whole grains","Soy milk"]}]},
+  minerals:{name:"Minerals",icon:"🪨",parent:"micro",
+    what:"Elements from soil and water that become part of your bones, blood and body fluids.",
+    why:"Major minerals are needed in larger amounts, and trace minerals in tiny amounts. Potassium and sodium are especially important for blood pressure.",
+    ex:[{n:"Potassium",d:"Helps balance sodium, supports healthy blood pressure, and helps muscles and nerves work.",f:["Banana","Avocado","Coconut water","Tomato","Beans"]},
+        {n:"Calcium",d:"Builds strong bones and teeth and helps muscles contract.",f:["Soy milk","Low-fat dairy","Tofu","Leafy greens"]},
+        {n:"Magnesium",d:"Supports nerves, muscles, blood sugar control and bone health.",f:["Nuts and seeds","Whole grains","Leafy greens","Coconut water"]},
+        {n:"Sodium (limit)",d:"Needed in small amounts, but most people eat too much. The DASH plan limits sodium to 2,300 mg a day, or 1,500 mg to lower blood pressure even more.",f:[]},
+        {n:"Iron",d:"Carries oxygen in your blood. Eat plant sources of iron with vitamin C to absorb more.",f:["Beans and lentils","Spinach","Lean meats"]},
+        {n:"Manganese, zinc and selenium",d:"Trace minerals that support metabolism, immunity, wound healing and antioxidant enzymes.",f:["Pineapple","Strawberry","Garlic","Nuts and seeds"]}]},
+  phyto:{name:"Phytonutrients",short:"Phyto",icon:"🌈",color:"#8a4fa3",soft:"#f1e6f6",kids:["carotenoids","flavonoids","sulfur","polyphenols"],
+    what:"Natural compounds made by plants (\"phyto\" means plant). They give fruits and vegetables their color, flavor and smell.",
+    why:"Phytonutrients aren't required like vitamins, but diets rich in them are linked with lower risk of heart disease, type 2 diabetes and some cancers. Much of this evidence comes from observational studies, and the benefits come from whole foods, not supplements. Eat a rainbow of colors to get a variety."},
+  carotenoids:{name:"Carotenoids",icon:"🥕",parent:"phyto",
+    what:"Red, orange, yellow and green pigments in plants.",
+    why:"Some carotenoids act as antioxidants, some support eye health, and beta-carotene can be turned into vitamin A. Eating them with a little fat helps your body absorb them.",
+    ex:[{n:"Lycopene",d:"The red pigment in tomatoes. More is absorbed from cooked tomatoes with olive oil.",f:["Tomato","Watermelon","Pink grapefruit"]},
+        {n:"Beta-carotene",d:"An orange pigment the body converts to vitamin A.",f:["Carrots","Sweet potatoes","Cilantro","Basil"]},
+        {n:"Lutein and zeaxanthin",d:"Collect in the eye and are linked with eye health as we age.",f:["Avocado","Leafy greens","Cilantro"]}]},
+  flavonoids:{name:"Flavonoids",icon:"🫐",parent:"phyto",
+    what:"The largest family of polyphenols, found in fruits, vegetables, tea, cocoa and soy.",
+    why:"Diets rich in flavonoids are linked with healthier blood vessels and lower risk of heart disease and type 2 diabetes.",
+    ex:[{n:"Anthocyanins",d:"Blue, purple and red pigments.",f:["Blueberry","Blackberry","Strawberry","Red onion"]},
+        {n:"Flavonols (quercetin, kaempferol)",d:"Found in onions, herbs and many fruits.",f:["Onion","Cilantro","Blueberry","Strawberry"]},
+        {n:"Isoflavones",d:"Found mainly in soybeans and soy foods.",f:["Soy milk","Tofu","Edamame"]},
+        {n:"Flavan-3-ols and flavanones",d:"Catechins in tea, cocoa and apples. Flavanones in citrus fruits.",f:["Green tea","Apples","Oranges"]}]},
+  sulfur:{name:"Sulfur compounds",icon:"🧄",parent:"phyto",
+    what:"Strong-smelling compounds in the onion family (alliums) and the cabbage family (cruciferous vegetables).",
+    why:"These compounds are studied for heart health and for helping the body's natural detox enzymes.",
+    ex:[{n:"Allicin and other allium compounds",d:"Form when garlic and onions are crushed or chopped. Let garlic sit about 10 minutes before cooking.",f:["Garlic","Onion","Leeks","Chives"]},
+        {n:"Glucosinolates (sulforaphane)",d:"Found in cruciferous vegetables. They turn into active compounds like sulforaphane when chopped or chewed.",f:["Broccoli","Cabbage","Kale","Brussels sprouts"]}]},
+  polyphenols:{name:"Other polyphenols",icon:"🍇",parent:"phyto",
+    what:"Plant compounds beyond flavonoids, including phenolic acids, ellagitannins and the polyphenols in olive oil.",
+    why:"Many act as antioxidants and anti-inflammatory compounds, and some feed healthy gut bacteria.",
+    ex:[{n:"Olive oil polyphenols (hydroxytyrosol, oleocanthal)",d:"Found in extra virgin olive oil and linked with its heart benefits.",f:["Extra virgin olive oil"]},
+        {n:"Ellagitannins and ellagic acid",d:"Found in berries and nuts.",f:["Strawberry","Blackberry","Walnuts","Pomegranate"]},
+        {n:"Phenolic acids (chlorogenic, rosmarinic acid)",d:"Found in coffee, fruits, vegetables and herbs.",f:["Blueberry","Tomato","Basil","Coffee"]}]}
+};
 
-function render(){
-  fields.forEach(f => state[f] = num(f));
-  const base = state.perFruit + state.perMilk + state.perWater;
-  const k = state.size && base ? state.size / base : 1;
-  const pF = state.perFruit*k, pM = state.perMilk*k, pW = state.perWater*k, tot = pF+pM+pW;
-  $('pf').textContent = fmt(pF,2) + ' oz'; $('pm').textContent = fmt(pM,2) + ' fl oz'; $('pw').textContent = fmt(pW,2) + ' fl oz';
-  $('lf').textContent = fmt(pF,2) + ' oz'; $('lm').textContent = fmt(pM,2) + ' fl oz'; $('lw').textContent = fmt(pW,2) + ' fl oz';
-  $('ptot').textContent = state.size ? `${fmt(tot)} fl oz total. Same recipe, scaled down. Use a cup bigger than ${fmt(tot)} oz so it's not full.` : `About ${fmt(tot)} fl oz total. Fills an 8 oz cup about ¾ of the way.`;
-  $('cap').textContent = state.size ? `${fmt(tot)} fl oz smoothie · same ratio` : `8 oz cup · about ${fmt(tot)} fl oz`;
-  $('sizes').querySelectorAll('button').forEach(b => b.classList.toggle('on', +b.dataset.s === state.size));
-  const n = state.count * (1 + state.buffer/100);
-  const fruit = n * pF, milk = n * pM, water = n * pW;
-  const bufNote = state.buffer > 0 ? ` <small>(includes ${state.buffer}% extra)</small>` : '';
-
-  // Fruit
-  $('fruitNeed').innerHTML = `${fmt(fruit)} oz <small>· ${lb(fruit)}</small>${bufNote}`;
-  const sizes = [...new Set(state.bagSizes)].sort((a,b)=>a-b);
-  $('fruitTable').innerHTML = sizes.map(s => {
-    const bags = Math.ceil(fruit / s - 1e-9);
-    return `<tr><td>${s} oz bag</td><td class="num">${bags}</td><td class="muted">${fmt(bags*s - fruit)} oz</td>
-      <td style="text-align:right"><button class="x" data-rm="${s}" title="Remove size">×</button></td></tr>`;
-  }).join('');
-
-  // Cart
-  const have = state.cart.reduce((t,c)=>t + c.size*c.qty, 0);
-  $('cartList').innerHTML = state.cart.length ? state.cart.map((c,i) =>
-    `<div class="cart-item"><span>${c.qty} × ${c.size} oz bag${c.qty>1?'s':''} = <b>${fmt(c.size*c.qty)} oz</b></span>
-     <button class="x" data-cart="${i}">×</button></div>`).join('') : '<p class="muted">No bags added yet.</p>';
-  const pct = fruit > 0 ? Math.min(100, have/fruit*100) : 0;
-  $('cartBar').className = 'bar' + (have >= fruit && fruit > 0 ? ' done' : '');
-  $('cartBar').firstElementChild.style.width = pct + '%';
-  if(fruit <= 0) $('cartStatus').innerHTML = '';
-  else if(have >= fruit) $('cartStatus').innerHTML = `<span class="pill ok">✓ Enough fruit: ${fmt(have)} of ${fmt(fruit)} oz (${fmt(have-fruit)} oz extra)</span>`;
-  else {
-    const short = fruit - have;
-    const tips = sizes.map(s => `${Math.ceil(short/s - 1e-9)} × ${s} oz`).slice(0,4).join(' or ');
-    $('cartStatus').innerHTML = `<span class="pill warn">Still need ${fmt(short)} oz</span><p class="muted" style="margin:6px 0 0">That's about ${tips}.</p>`;
+/* ---------------- Wheel drawing ---------------- */
+const C = 220, R0 = 58, R1 = 128, R2 = 212;
+const pol = (r,a) => [C + r*Math.sin(a), C - r*Math.cos(a)];
+function arc(r1,r2,a1,a2){
+  const big = a2-a1 > Math.PI ? 1 : 0;
+  const [x1,y1]=pol(r2,a1),[x2,y2]=pol(r2,a2),[x3,y3]=pol(r1,a2),[x4,y4]=pol(r1,a1);
+  return `M${x1} ${y1}A${r2} ${r2} 0 ${big} 1 ${x2} ${y2}L${x3} ${y3}A${r1} ${r1} 0 ${big} 0 ${x4} ${y4}Z`;
+}
+function lighten(hex,amt){const n=parseInt(hex.slice(1),16);let r=n>>16,g=n>>8&255,b=n&255;r=Math.round(r+(255-r)*amt);g=Math.round(g+(255-g)*amt);b=Math.round(b+(255-b)*amt);return `rgb(${r},${g},${b})`;}
+const LBL = {carbs:["Carbs"],protein:["Protein"],fats:["Fats"],vitamins:["Vitamins"],minerals:["Minerals"],carotenoids:["Carote-","noids"],flavonoids:["Flavo-","noids"],sulfur:["Sulfur","comp."],polyphenols:["Poly-","phenols"]};
+let current = "macro";
+function drawWheel(){
+  let s = "";
+  ["macro","micro","phyto"].forEach((k,i)=>{
+    const g = N[k], a1 = i*2*Math.PI/3, a2 = (i+1)*2*Math.PI/3;
+    s += `<path data-k="${k}" d="${arc(R0,R1,a1,a2)}" fill="${g.color}"/>`;
+    const [tx,ty] = pol((R0+R1)/2,(a1+a2)/2);
+    s += `<text x="${tx}" y="${ty-4}" text-anchor="middle" fill="#fff" font-size="15">${g.short}</text><text x="${tx}" y="${ty+13}" text-anchor="middle" fill="#fff" font-size="11">nutrients</text>`;
+    const step = (a2-a1)/g.kids.length;
+    g.kids.forEach((c,j)=>{
+      const b1=a1+j*step,b2=b1+step;
+      s += `<path data-k="${c}" d="${arc(R1+4,R2,b1,b2)}" fill="${lighten(g.color, j%2?0.55:0.4)}"/>`;
+      const [x,y] = pol((R1+R2)/2+4,(b1+b2)/2), L = LBL[c];
+      s += `<text x="${x}" y="${y+(L.length>1?-2:5)}" text-anchor="middle" fill="#2b2a28" font-size="13">${L[0]}</text>` + (L[1]?`<text x="${x}" y="${y+14}" text-anchor="middle" fill="#2b2a28" font-size="13">${L[1]}</text>`:"");
+    });
+  });
+  s += `<circle cx="${C}" cy="${C}" r="${R0-4}" fill="#2c5c39" style="cursor:pointer" data-k="center"/><text x="${C}" y="${C-2}" text-anchor="middle" fill="#fff" font-size="14">Nutrients</text><text x="${C}" y="${C+14}" text-anchor="middle" fill="#cfe1c9" font-size="10">tap a slice</text>`;
+  $("nwheel").innerHTML = s;
+  $("nwheel").addEventListener('click', e => { const k = e.target.dataset.k; if(k) showNutrient(k === "center" ? "overview" : k); });
+}
+const FOODNAMES = () => new Set(FOODS.map(f=>f.name));
+function foodChips(list){
+  const have = FOODNAMES();
+  return list.map(f => have.has(f) ? `<button class="chip" data-food="${esc(f)}">${esc(f)} →</button>` : `<span class="chip">${esc(f)}</span>`).join("");
+}
+function showNutrient(k){
+  current = k;
+  document.querySelectorAll('#nwheel path').forEach(p => p.classList.toggle('dim', k!=="overview" && p.dataset.k!==k && N[k] && N[k].parent!==p.dataset.k && !(N[k].kids||[]).includes(p.dataset.k)));
+  let h;
+  if(k === "overview"){
+    h = `<h2>🌱 The three kinds of nutrients</h2><p>Every food is a mix of these. Tap a slice of the wheel to explore.</p>` +
+      ["macro","micro","phyto"].map(g=>`<div class="ex"><h4>${N[g].icon} ${N[g].name}</h4><p>${N[g].what}</p><button class="chip" data-nut="${g}">Learn more →</button></div>`).join("");
+  } else {
+    const n = N[k], top = n.parent ? N[n.parent] : n;
+    h = `<div class="muted" style="font-weight:700;color:${top.color}">${n.parent ? `<a href="#wheel" data-nut="${n.parent}" style="color:inherit">${top.name}</a> ›` : "The three kinds of nutrients"}</div>`;
+    h += `<h2 style="color:${top.color}">${n.icon} ${n.name}</h2><p><b>What it is:</b> ${n.what}</p><p><b>Why it matters:</b> ${n.why}</p>`;
+    if(n.kids){
+      h += `<p style="margin-bottom:4px"><b>Types of ${n.name.toLowerCase()}:</b></p><div class="subnav">` + n.kids.map(c=>`<button data-nut="${c}" style="background:${top.soft}">${N[c].icon} ${N[c].name}</button>`).join("") + `</div>`;
+    }
+    if(n.ex){
+      h += `<h3 style="margin:16px 0 4px;font-size:1.02rem">Examples and food sources</h3>` + n.ex.map(e=>`<div class="ex"><h4>${e.n}</h4><p>${e.d}</p>${foodChips(e.f)}</div>`).join("");
+    }
+    h += `<p style="margin-top:14px"><button class="btn ghost" data-nut="overview">← All nutrients</button></p>`;
   }
+  $('panel').innerHTML = h;
+}
+$('panel').addEventListener('click', e => {
+  const t = e.target.closest('[data-nut],[data-food]'); if(!t) return;
+  e.preventDefault();
+  if(t.dataset.nut) showNutrient(t.dataset.nut);
+  if(t.dataset.food){ openFood(t.dataset.food); }
+});
 
-  // Milk & water
-  const carton = (need, size, label) => {
-    if(!size) return '<p class="muted">Set a carton size under Recipe and carton sizes.</p>';
-    const c = Math.ceil(need/size - 1e-9);
-    return `<p style="margin:0">Buy <b style="font-size:1.3rem">${c}</b> ${label}${c===1?'':'s'} (${fmt(size)} fl oz each)
-      <span class="muted"> · about ${fmt(c*size - need)} fl oz left over</span></p>
-      <p class="muted" style="margin:4px 0 0">One ${label} makes about ${Math.floor(size/(need/n||1))} smoothies at this size.</p>`;
-  };
-  $('milkNeed').innerHTML = `${fmt(milk)} fl oz <small>· ${gal(milk)}</small>${bufNote}`;
-  $('milkBuy').innerHTML = carton(milk, state.milkSize, 'carton');
-  $('waterNeed').innerHTML = `${fmt(water)} fl oz <small>· ${gal(water)}</small>${bufNote}`;
-  $('waterBuy').innerHTML = carton(water, state.waterSize, 'carton');
-
-  // Summary
-  const mc = state.milkSize ? Math.ceil(milk/state.milkSize - 1e-9) : '?';
-  const wc = state.waterSize ? Math.ceil(water/state.waterSize - 1e-9) : '?';
-  $('summary').innerHTML = `
-    <li>🍓 <b>${fmt(fruit)} oz organic frozen fruit</b> (${lb(fruit)}), any mix of bags</li>
-    <li>🥛 <b>${mc} soy or coconut milk carton${mc===1?'':'s'}</b> (${fmt(state.milkSize)} fl oz)</li>
-    <li>💧 <b>${wc} coconut water carton${wc===1?'':'s'}</b> (${fmt(state.waterSize)} fl oz, 100%, no sugar added)</li>
-    <li class="muted">Makes ${state.count.toLocaleString()} × ${fmt(tot)} fl oz smoothies${state.buffer?` + ${state.buffer}% buffer`:''}</li>`;
-  save();
+/* ---------------- Food drawings ---------------- */
+const ART = {
+  tomato:`<circle cx="50" cy="56" r="34" fill="#e2463b"/><ellipse cx="38" cy="46" rx="8" ry="5" fill="#f47a6e" opacity=".7"/><path d="M50 26l6 8 10-3-6 8 8 6-11 0-7 7-7-7-11 0 8-6-6-8 10 3z" fill="#3f8a3a"/><rect x="48" y="16" width="4" height="12" rx="2" fill="#3f8a3a"/>`,
+  basil:`<path d="M50 92V40" stroke="#3b7d32" stroke-width="4" stroke-linecap="round"/><path d="M50 50C30 50 16 36 18 18c18 0 32 12 32 32z" fill="#4fa040"/><path d="M50 50c20 0 34-14 32-32-18 0-32 12-32 32z" fill="#5db84d"/><path d="M50 70c-18 0-30-12-28-28 16 0 28 10 28 28z" fill="#3f8a3a"/><path d="M50 70c18 0 30-12 28-28-16 0-28 10-28 28z" fill="#4fa040"/><path d="M50 50L26 24M50 50l24-26M50 70L28 46M50 70l22-24" stroke="#2f6b28" stroke-width="1.2" opacity=".6"/>`,
+  onion:`<path d="M50 14c4 10 4 14 10 20 14 10 24 22 24 36 0 14-14 22-34 22S16 84 16 70c0-14 10-26 24-36 6-6 6-10 10-20z" fill="#9b4d8a"/><path d="M50 26c-4 14-12 20-14 40s6 24 14 24" stroke="#c78bb8" stroke-width="2" fill="none"/><path d="M50 26c4 14 12 20 14 40s-6 24-14 24" stroke="#c78bb8" stroke-width="2" fill="none"/><path d="M44 92l-4 6M50 92v6M56 92l4 6" stroke="#c8b49a" stroke-width="2" stroke-linecap="round"/>`,
+  garlic:`<path d="M50 12c3 12 4 16 12 22 14 10 22 20 22 34 0 16-16 24-34 24S16 84 16 68c0-14 8-24 22-34 8-6 9-10 12-22z" fill="#f4efe4" stroke="#d8cdb8" stroke-width="2"/><path d="M50 30c-6 18-10 30-6 62M50 30c6 18 10 30 6 62M36 40c-8 14-10 30-4 50M64 40c8 14 10 30 4 50" stroke="#d8cdb8" stroke-width="2" fill="none"/><path d="M44 92l-3 5M50 92v6M56 92l3 5" stroke="#b8a68a" stroke-width="2" stroke-linecap="round"/>`,
+  oliveoil:`<rect x="44" y="8" width="12" height="12" rx="2" fill="#3a5a2a"/><path d="M42 20h16v10c10 6 14 14 14 24v36a6 6 0 0 1-6 6H34a6 6 0 0 1-6-6V54c0-10 4-18 14-24z" fill="#b9c25a"/><path d="M28 60h44v30a6 6 0 0 1-6 6H34a6 6 0 0 1-6-6z" fill="#9aa83c"/><rect x="34" y="50" width="32" height="24" rx="4" fill="#fffbea"/><ellipse cx="47" cy="62" rx="5" ry="7" fill="#556b2f" transform="rotate(-20 47 62)"/><path d="M52 58c4-4 8-4 10-2" stroke="#3f8a3a" stroke-width="2" fill="none"/>`,
+  soymilk:`<path d="M30 30l8-16h24l8 16z" fill="#e6e1d3"/><rect x="30" y="30" width="40" height="62" rx="3" fill="#fffdf6" stroke="#e0dacb" stroke-width="2"/><rect x="30" y="48" width="40" height="26" fill="#cfe1c9"/><ellipse cx="42" cy="61" rx="5" ry="6" fill="#d8c27a"/><ellipse cx="51" cy="61" rx="5" ry="6" fill="#d8c27a"/><ellipse cx="60" cy="61" rx="5" ry="6" fill="#d8c27a"/><path d="M38 61c8-12 20-12 26 0" stroke="#5aa04a" stroke-width="2" fill="none"/>`,
+  coconutwater:`<path d="M16 52a34 34 0 0 0 68 0z" fill="#7a5134"/><ellipse cx="50" cy="52" rx="34" ry="8" fill="#fffdf6"/><ellipse cx="50" cy="52" rx="26" ry="5" fill="#d9eef3"/><path d="M60 50l14-38" stroke="#e2463b" stroke-width="4" stroke-linecap="round"/><path d="M28 70c6 4 12 6 20 6" stroke="#5e3d27" stroke-width="2" fill="none"/>`,
+  avocado:`<path d="M50 8c14 0 18 18 24 34 8 20 10 50-24 50S18 62 26 42C32 26 36 8 50 8z" fill="#3e6b2a"/><path d="M50 16c10 0 14 14 18 28 6 16 6 40-18 40S26 60 32 44c4-14 8-28 18-28z" fill="#cfe08a"/><circle cx="50" cy="60" r="13" fill="#8a5a33"/><ellipse cx="46" cy="56" rx="4" ry="3" fill="#a87448"/>`,
+  cilantro:`<path d="M50 94V58M50 70L30 46M50 66l20-26M50 80L36 64M50 76l16-14" stroke="#4a8f3a" stroke-width="3" stroke-linecap="round" fill="none"/><g fill="#5db84d"><circle cx="28" cy="40" r="9"/><circle cx="20" cy="48" r="7"/><circle cx="34" cy="32" r="7"/><circle cx="72" cy="34" r="9"/><circle cx="80" cy="42" r="7"/><circle cx="66" cy="26" r="7"/><circle cx="50" cy="48" r="9"/><circle cx="44" cy="40" r="7"/><circle cx="57" cy="40" r="7"/><circle cx="34" cy="60" r="7"/><circle cx="68" cy="58" r="7"/></g>`,
+  strawberry:`<path d="M50 92C30 80 14 58 18 40c3-12 16-16 32-12 16-4 29 0 32 12 4 18-12 40-32 52z" fill="#e0344d"/><g fill="#ffe08a"><circle cx="36" cy="44" r="1.8"/><circle cx="50" cy="42" r="1.8"/><circle cx="64" cy="44" r="1.8"/><circle cx="30" cy="56" r="1.8"/><circle cx="44" cy="56" r="1.8"/><circle cx="58" cy="56" r="1.8"/><circle cx="70" cy="56" r="1.8"/><circle cx="38" cy="68" r="1.8"/><circle cx="52" cy="70" r="1.8"/><circle cx="64" cy="68" r="1.8"/><circle cx="46" cy="80" r="1.8"/><circle cx="56" cy="80" r="1.8"/></g><path d="M50 30l-16-8 10 12-14 2 16 4 4-2 4 2 16-4-14-2 10-12z" fill="#3f8a3a"/><rect x="48" y="12" width="4" height="14" rx="2" fill="#3f8a3a"/>`,
+  banana:`<path d="M20 30c4 34 28 56 62 50 4-1 4-6 0-7-26 2-44-18-50-46-1-5-12-5-12 3z" fill="#f6d33c"/><path d="M26 34c6 26 26 42 52 42" stroke="#d9a91e" stroke-width="2" fill="none"/><path d="M18 26l6-6 6 4-4 6z" fill="#6b5223"/><path d="M80 74l6 2-2 5-5-1z" fill="#6b5223"/>`,
+  pineapple:`<path d="M50 34l-6-20 6 8 6-8-6 20zM50 34l-18-16 10 4-2-10zM50 34l18-16-10 4 2-10z" fill="#3f8a3a"/><path d="M50 34L36 10l8 6M50 34l14-24-8 6" stroke="#3f8a3a" stroke-width="4" stroke-linecap="round"/><ellipse cx="50" cy="64" rx="24" ry="30" fill="#f2b632"/><path d="M30 46l40 40M26 60l30 30M38 38l36 36M70 46L30 86M74 60L44 90M62 38L26 74" stroke="#c98a18" stroke-width="2"/>`,
+  blackberry:`<path d="M50 20v-8" stroke="#3f8a3a" stroke-width="4" stroke-linecap="round"/><path d="M50 22l-10-6 4 8-10 0 12 4zM50 22l10-6-4 8 10 0-12 4z" fill="#3f8a3a"/><g fill="#3a1f4a"><circle cx="50" cy="34" r="8"/><circle cx="38" cy="42" r="8"/><circle cx="62" cy="42" r="8"/><circle cx="50" cy="48" r="8"/><circle cx="34" cy="56" r="8"/><circle cx="66" cy="56" r="8"/><circle cx="50" cy="62" r="8"/><circle cx="40" cy="70" r="8"/><circle cx="60" cy="70" r="8"/><circle cx="50" cy="80" r="8"/></g><g fill="#7a4e95" opacity=".8"><circle cx="47" cy="31" r="2.2"/><circle cx="35" cy="39" r="2.2"/><circle cx="59" cy="39" r="2.2"/><circle cx="47" cy="45" r="2.2"/><circle cx="31" cy="53" r="2.2"/><circle cx="63" cy="53" r="2.2"/><circle cx="47" cy="59" r="2.2"/><circle cx="37" cy="67" r="2.2"/><circle cx="57" cy="67" r="2.2"/><circle cx="47" cy="77" r="2.2"/></g>`,
+  blueberry:`<circle cx="34" cy="62" r="20" fill="#3b5ba5"/><circle cx="66" cy="62" r="20" fill="#4a6cb8"/><circle cx="50" cy="36" r="20" fill="#5578c4"/><g fill="#24386e"><path d="M50 30l3 4 4-1-2 4 3 3-4 0-1 4-3-3-3 3-1-4-4 0 3-3-2-4 4 1z"/><path d="M34 56l3 4 4-1-2 4 3 3-4 0-1 4-3-3-3 3-1-4-4 0 3-3-2-4 4 1z"/><path d="M66 56l3 4 4-1-2 4 3 3-4 0-1 4-3-3-3 3-1-4-4 0 3-3-2-4 4 1z"/></g><ellipse cx="42" cy="28" rx="5" ry="3" fill="#8aa6e0" opacity=".6"/>`
+};
+function pic(f){
+  if(f.picture) return `<img src="${esc(f.picture)}" alt="${esc(f.name)}">`;
+  if(f.art && ART[f.art]) return `<svg viewBox="0 0 100 100" width="100%" height="100%" aria-hidden="true">${ART[f.art]}</svg>`;
+  return esc(f.emoji || "🥗");
 }
 
-function fill(){ fields.forEach(f => $(f).value = state[f]); }
+/* ---------------- Food dictionary ---------------- */
+let foodFilter = "All", foodQuery = "", openName = null;
+function renderFoods(){
+  if(openName){ return renderFoodDetail(FOODS.find(f=>f.name===openName)); }
+  const groups = ["All", ...new Set(FOODS.map(f=>f.group))];
+  const q = foodQuery.toLowerCase();
+  const list = FOODS.filter(f => (foodFilter==="All"||f.group===foodFilter) &&
+    (!q || [f.name,f.group,...f.micro,...f.phyto].join(" ").toLowerCase().includes(q)));
+  $('foodview').innerHTML = `<div class="filters"><input id="fq" type="search" placeholder="Search a food or nutrient, e.g. vitamin C" value="${esc(foodQuery)}">` +
+    groups.map(g=>`<button data-g="${esc(g)}" class="${g===foodFilter?'on':''}">${esc(g)}</button>`).join("") + `</div>` +
+    (list.length ? `<div class="foodgrid">` + list.map(f=>`<button class="food" data-open="${esc(f.name)}"><div class="pic">${pic(f)}</div><b>${esc(f.name)}</b><span>${esc(f.group)}</span></button>`).join("") + `</div>`
+      : `<p class="muted">No foods match. Try another word.</p>`);
+  const fq = $('fq'); fq.addEventListener('input', () => { foodQuery = fq.value; const pos = fq.selectionStart; renderFoods(); const n=$('fq'); n.focus(); n.setSelectionRange(pos,pos); });
+}
+function renderFoodDetail(f){
+  if(!f){ openName=null; return renderFoods(); }
+  const list = a => `<ul>${a.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`;
+  $('foodview').innerHTML = `<p><button class="btn ghost" data-back="1">← All foods</button></p>
+  <div class="card fd"><div><div class="pic">${pic(f)}</div><p style="text-align:center;margin:10px 0 0"><span class="tag">${esc(f.group)}</span>${f.color?`<span class="tag">${esc(f.color)}</span>`:""}</p></div>
+  <div><h1>${esc(f.name)}</h1><p>${esc(f.summary)}</p>
+    <div class="nut m"><h3>⚡ Macronutrients <button data-nut="macro">What are these?</button></h3><p style="margin:0">${esc(f.macro)}</p></div>
+    <div class="nut i"><h3>🔹 Key micronutrients <button data-nut="micro">What are these?</button></h3>${list(f.micro)}</div>
+    <div class="nut p"><h3>🌈 Phytonutrients <button data-nut="phyto">What are these?</button></h3>${list(f.phyto)}</div>
+    <p><b>Why it's good for you:</b> ${esc(f.benefits)}</p>
+    <div class="tipbox"><b>👩‍🍳 Tip:</b> ${esc(f.tip)}</div>
+  </div></div>`;
+  window.scrollTo({top:0});
+}
+function openFood(name){ openName = name; location.hash = "foods"; renderFoods(); }
+$('foodview').addEventListener('click', e => {
+  const t = e.target.closest('[data-open],[data-g],[data-back],[data-nut]'); if(!t) return;
+  if(t.dataset.open) openFood(t.dataset.open);
+  else if(t.dataset.g){ foodFilter = t.dataset.g; renderFoods(); }
+  else if(t.dataset.back){ openName = null; renderFoods(); }
+  else if(t.dataset.nut){ location.hash = "wheel"; showNutrient(t.dataset.nut); }
+});
 
-$('quick').innerHTML = [25,50,75,100,150,200,300].map(v=>`<button data-q="${v}">${v}</button>`).join('');
-$('quick').addEventListener('click', e => { const q = e.target.dataset.q; if(q){ $('count').value = q; render(); } });
-fields.forEach(f => $(f).addEventListener('input', render));
-$('sizes').innerHTML = SIZES.map(([v,l]) => `<button data-s="${v}">${l}</button>`).join('');
-$('sizes').addEventListener('click', e => { const v = e.target.dataset.s; if(v !== undefined){ state.size = +v; render(); } });
+/* ---------------- Handouts and resources ---------------- */
+function handoutCards(type){
+  return HANDOUTS.filter(h=>h.type===type).map(h=>`<div class="tile"><div class="ic">${type==="recipe"?"🍽️":"📄"}</div><h3>${esc(h.title)}</h3><p>${esc(h.description)}</p>
+    <div style="margin-top:8px">${(h.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join("")}</div>
+    <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">${h.file?`<a class="btn" href="${esc(h.file)}" target="_blank" rel="noopener">View handout</a>`:""}${h.link?`<a class="btn ghost" href="${esc(h.link)}">${esc(h.linkLabel||"Open")}</a>`:""}${!h.file&&!h.link?`<span class="muted">Handout coming soon</span>`:""}</div></div>`).join("");
+}
+$('recipelist').innerHTML = handoutCards("recipe");
+$('guidelist').innerHTML = handoutCards("guide");
+$('reslist').innerHTML = RESOURCES.map(t=>`<h2 class="topic">${t.icon} ${esc(t.topic)}</h2><div class="res">` +
+  t.links.map(l=>`<a class="link" href="${esc(l.url)}" target="_blank" rel="noopener"><b>${esc(l.name)} ↗</b><div class="muted">${esc(l.org)}</div><div style="margin-top:4px">${esc(l.about)}</div></a>`).join("") + `</div>`).join("");
 
-$('addSize').addEventListener('click', () => {
-  const s = parseFloat($('customBag').value);
-  if(s > 0){ state.bagSizes.push(s); $('customBag').value=''; render(); }
-});
-$('fruitTable').addEventListener('click', e => {
-  const s = parseFloat(e.target.dataset.rm);
-  if(s){ state.bagSizes = state.bagSizes.filter(x => x !== s); render(); }
-});
-$('addCart').addEventListener('click', () => {
-  const size = parseFloat($('cartSize').value), qty = parseInt($('cartQty').value) || 1;
-  if(size > 0){ state.cart.push({size, qty}); $('cartQty').value = 1; render(); }
-});
-$('cartList').addEventListener('click', e => {
-  const i = e.target.dataset.cart;
-  if(i !== undefined){ state.cart.splice(+i, 1); render(); }
-});
-$('reset').addEventListener('click', () => { const cart = state.cart; state = JSON.parse(JSON.stringify(DEFAULTS)); state.cart = cart; fill(); render(); });
 
-fill(); render();
+/* ---------------- Recipe Finder ---------------- */
+const TAGINFO = {
+  dash:{label:"DASH-friendly", desc:"DASH food groups, 600 mg sodium or less per serving, low in saturated fat"},
+  lowgi:{label:"Low glycemic index", desc:"Mostly low-GI foods that raise blood sugar slowly; no refined grains or added sugar"},
+  med:{label:"Mediterranean", desc:"Olive oil, vegetables, beans, whole grains, fish, herbs and nuts"}
+};
+const F = {picked:new Set(), tags:new Set(), open:null, servings:null, q:""};
+const NUTR = r => { const t = Array(9).fill(0); r.ing.forEach(([id,q,u,g]) => { const I = INGREDIENTS[id]; if(I) I.n.forEach((v,i) => t[i] += v*q*g/100); }); return t; };
+const pickOf = id => (INGREDIENTS[id]||{}).pick;
+function recipePicks(r){ return [...new Set(r.ing.map(x=>pickOf(x[0])).filter(Boolean))]; }
+function badges(r){ return r.tags.map(t=>`<span class="badge b-${t}">${TAGINFO[t].label}</span>`).join(""); }
+function renderFinder(){ if(F.open) return renderRecipe(); renderPicker(); }
+function renderPicker(){
+  const used = new Set(RECIPES.flatMap(recipePicks));
+  const groups = {};
+  Object.values(INGREDIENTS).forEach(I => { if(I.pick && used.has(I.pick)){ (groups[I.grp] ||= new Set()).add(I.pick); } });
+  const order = ["Produce","Herbs","Proteins","Beans & grains","Dairy & alternatives","Pantry"];
+  const q = F.q.toLowerCase();
+  let h = `<div class="card"><p class="step">Step 1 · Pick your ingredients</p>
+    <div class="filters" style="margin-bottom:6px"><input id="iq" type="search" placeholder="Search ingredients" value="${esc(F.q)}">${F.picked.size?`<button id="clearp">Clear (${F.picked.size})</button>`:""}</div>`;
+  order.forEach(g => { if(!groups[g]) return; const items = [...groups[g]].filter(x=>!q||x.toLowerCase().includes(q)).sort(); if(!items.length) return;
+    h += `<div class="pickgrp"><b>${g}</b>${items.map(x=>`<button class="pk ${F.picked.has(x)?'on':''}" data-pk="${esc(x)}">${esc(x)}</button>`).join("")}</div>`; });
+  h += `<p class="step" style="margin-top:14px">Step 2 · Filter (optional)</p><div style="display:flex;flex-wrap:wrap;gap:8px">` +
+    Object.entries(TAGINFO).map(([k,t])=>`<button class="flt ${F.tags.has(k)?'on':''}" data-tg="${k}">${F.tags.has(k)?'✓ ':''}${t.label}<small>${t.desc}</small></button>`).join("") + `</div></div>`;
+  let list = RECIPES.map(r => { const p = recipePicks(r); return {r, have:p.filter(x=>F.picked.has(x)), need:p.filter(x=>!F.picked.has(x))}; })
+    .filter(o => [...F.tags].every(t=>o.r.tags.includes(t)) && (!F.picked.size || o.have.length))
+    .sort((a,b) => b.have.length - a.have.length || a.need.length - b.need.length);
+  h += `<h2 style="margin-top:20px">${F.picked.size ? `${list.length} recipe idea${list.length===1?'':'s'} with your ingredients` : `All recipes (${list.length})`}</h2>`;
+  h += list.length ? `<div class="rgrid">` + list.map(o => { const n = NUTR(o.r);
+      return `<button class="rc" data-rc="${esc(o.r.name)}"><div class="em">${o.r.emoji}</div><h3>${esc(o.r.name)}</h3><div>${badges(o.r)}</div>
+      <div class="muted">${esc(o.r.meal)} · ${esc(o.r.time)} · ${Math.round(n[0]/o.r.servings)} cal per serving</div>
+      ${F.picked.size?`<div class="match" style="margin-top:6px">Uses ${o.have.length} of your ${F.picked.size}: ${esc(o.have.join(", "))}</div>${o.need.length?`<div class="need">Also needs: ${esc(o.need.join(", "))}</div>`:""}`:""}</button>`; }).join("") + `</div>`
+    : `<p class="muted">No recipes match all of those. Try removing a filter or picking different ingredients.</p>`;
+  $('finderview').innerHTML = h;
+  const iq = $('iq'); iq.addEventListener('input', () => { F.q = iq.value; const p = iq.selectionStart; renderPicker(); const n = $('iq'); n.focus(); n.setSelectionRange(p,p); });
+}
+$('finderview').addEventListener('click', e => {
+  const t = e.target.closest('[data-pk],[data-tg],[data-rc],#clearp,[data-act]'); if(!t) return;
+  if(t.dataset.pk){ F.picked.has(t.dataset.pk) ? F.picked.delete(t.dataset.pk) : F.picked.add(t.dataset.pk); renderPicker(); }
+  else if(t.dataset.tg){ F.tags.has(t.dataset.tg) ? F.tags.delete(t.dataset.tg) : F.tags.add(t.dataset.tg); renderPicker(); }
+  else if(t.id === "clearp"){ F.picked.clear(); renderPicker(); }
+  else if(t.dataset.rc){ F.open = RECIPES.find(r=>r.name===t.dataset.rc); F.servings = F.open.servings; renderRecipe(); window.scrollTo({top:0}); }
+  else if(t.dataset.act === "back"){ F.open = null; renderPicker(); }
+  else if(t.dataset.act === "minus"){ setServings(F.servings - 1); }
+  else if(t.dataset.act === "plus"){ setServings(F.servings + 1); }
+  else if(t.dataset.act === "notes"){ saveNotes(); }
+  else if(t.dataset.act === "pdf"){ savePDF(); }
+  else if(t.dataset.act === "img"){ saveImage(); }
+});
+function setServings(v){ v = Math.max(1, Math.min(100, Math.round(v)||1)); F.servings = v; renderRecipe(); }
+const FR = [[0,""],[0.125,"⅛"],[0.25,"¼"],[0.333,"⅓"],[0.5,"½"],[0.667,"⅔"],[0.75,"¾"],[1,""]];
+function niceQty(q, unit){
+  const u = unit.replace(/s$/,"");
+  if(["cup","Tbsp","tsp","pinch",""].includes(u) || ["medium","large","clove","can (14.5 oz)"].includes(u)){
+    const step = ["cup","Tbsp","tsp"].includes(u) ? 0 : 1;
+    let whole = Math.floor(q), frac = q - whole, best = FR[0];
+    const opts = step ? FR.filter(f=>[0,0.25,0.5,0.75,1].includes(f[0])) : FR;
+    opts.forEach(f => { if(Math.abs(frac-f[0]) < Math.abs(frac-best[0])) best = f; });
+    if(best[0] === 1){ whole += 1; best = FR[0]; }
+    if(whole === 0 && !best[1]) return "a little";
+    return (whole ? whole : "") + best[1];
+  }
+  return String(Math.round(q*10)/10);
+}
+function unitLabel(q, unit){
+  if(!unit) return "";
+  const base = unit.replace(/s$/,"");
+  if(["cup","clove"].includes(base)) return q > 1.01 ? base+"s" : base;
+  return unit;
+}
+function lines(r, k){ return r.ing.map(([id,q,u,g,d]) => { const sq = q*k; const qt = niceQty(sq,u); return {id, text: qt === "a little" ? `A little ${d}` : `${qt} ${unitLabel(sq,u)} ${d}`.replace(/\s+/g," ").trim()}; }); }
+function nutRows(r, k){
+  if(r.facts){ const f = r.facts; return {...f, cal:f.cal, total:Math.round(f.cal*F.servings), official:true}; }
+  const n = NUTR(r).map(v => v / r.servings);
+  const g = v => v < 1 ? (Math.round(v*2)/2) + "g" : Math.round(v) + "g";
+  const mg = v => (Math.round(v/5)*5) + "mg";
+  return {cal:Math.round(n[0]), fat:g(n[5]), sat:g(n[6]), na:mg(n[7]), carb:g(n[2]), fib:g(n[3]), sug:g(n[4]), pro:g(n[1]), k:mg(n[8]), total:Math.round(n[0]*F.servings)};
+}
+function renderRecipe(){
+  const r = F.open, k = F.servings / r.servings, n = nutRows(r, k);
+  const inFrame = window.self !== window.top;
+  $('finderview').innerHTML = `<p><button class="btn ghost" data-act="back">← Back to recipe ideas</button></p>
+  <div class="card" id="rcard">
+    <div class="rv"><div>
+      <div style="font-size:2.4rem">${r.emoji}</div><h1>${esc(r.name)}</h1><div>${badges(r)}</div>
+      <p>${esc(r.about)}</p><p class="muted">${esc(r.meal)} · ${esc(r.time)}</p>
+      <div class="stepper" data-html2canvas-ignore><b>Servings:</b><button data-act="minus" aria-label="Fewer servings">−</button><input id="sv" type="number" min="1" max="100" value="${F.servings}" inputmode="numeric"><button data-act="plus" aria-label="More servings">+</button>${F.servings!==r.servings?`<span class="muted">(original makes ${r.servings})</span>`:""}</div>
+      <h2>Ingredients <span class="muted" style="font-weight:600">for ${F.servings} serving${F.servings>1?'s':''}</span></h2>
+      <ul class="ingl">${lines(r,k).map(l=>`<li class="${F.picked.has(pickOf(l.id))?'have':''}">${esc(l.text)}</li>`).join("")}</ul>
+      <h2>Steps</h2><ol class="stepsl">${r.steps.map(s=>`<li>${esc(s)}</li>`).join("")}</ol>
+    </div><div>
+      <div class="nf"><h3>Nutrition Facts</h3><div style="font-size:.85rem">${n.official?"":"Estimated · "}${F.servings} serving${F.servings>1?'s':''} in this batch</div>
+        <div class="row thick"><b>Amount per serving</b></div>
+        <div class="row" style="border-top:none"><span class="cal">Calories</span><span class="cal">${n.cal}</span></div>
+        <div class="row med"><span><b>Total fat</b> ${n.fat}</span></div>
+        <div class="row ind"><span>Saturated fat ${n.sat}</span></div>
+        ${n.official ? `<div class="row"><span><b>Cholesterol</b> ${n.chol}</span></div>` : ""}
+        <div class="row"><span><b>Sodium</b> ${n.na}</span></div>
+        <div class="row"><span><b>Total carbohydrate</b> ${n.carb}</span></div>
+        <div class="row ind"><span>Dietary fiber ${n.fib}</span></div>
+        <div class="row ind"><span>Total sugars ${n.sug}</span></div>
+        ${n.official ? `<div class="row ind" style="padding-left:28px"><span>Includes ${n.added} added sugars</span></div>` : ""}
+        <div class="row"><span><b>Protein</b> ${n.pro}</span></div>
+        <div class="row thick"><span>Potassium ${n.k}</span></div>
+        ${n.official ? Object.entries(n.extra).map(([a,b])=>`<div class="row"><span>${a} ${b}</span></div>`).join("") : ""}
+        <div style="font-size:.75rem;margin-top:4px">${n.official ? `Serving size: ${esc(n.size)}. Whole batch: about ${n.total} calories. Nutrition facts from the Harvesting Health team.` : `Whole batch: about ${n.total} calories. Estimated from USDA FoodData Central. Values vary by brand and portion.`}</div>
+      </div>
+      <p class="muted" style="font-size:.8rem;margin-top:8px">Serving size stays the same when you scale. Changing servings changes the ingredient amounts.</p>
+    </div></div>
+    <div data-html2canvas-ignore>
+      <div class="savebar"><button class="btn" data-act="notes">📝 Save to Notes</button><button class="btn" data-act="pdf">📄 Download PDF</button><button class="btn" data-act="img">🖼️ Save image</button></div>
+      ${inFrame?`<p class="muted" style="font-size:.8rem">Saving is blocked in this preview. The buttons work on your live Vercel site.</p>`:""}
+      <div id="toast"></div>
+    </div>
+    <p class="muted" style="font-size:.78rem;margin:10px 0 0">Harvesting Health · General nutrition education, not medical advice.</p>
+  </div>`;
+  $('sv').addEventListener('change', e => setServings(+e.target.value));
+}
+function toast(msg){ const t = $('toast'); if(t){ t.innerHTML = `<div class="toast">${esc(msg)}</div>`; setTimeout(()=>{ if(t) t.innerHTML=""; }, 5000); } }
+function recipeText(){
+  const r = F.open, k = F.servings / r.servings, n = nutRows(r,k);
+  return `${r.name}\nServings: ${F.servings} · ${r.time}\n${r.tags.map(t=>TAGINFO[t].label).join(" · ")}\n\nINGREDIENTS\n` +
+    lines(r,k).map(l=>"• "+l.text).join("\n") + `\n\nSTEPS\n` + r.steps.map((s,i)=>`${i+1}. ${s}`).join("\n") +
+    `\n\nNUTRITION PER SERVING${F.open.facts?"":" (estimated)"}\nCalories ${n.cal} · Fat ${n.fat} (sat ${n.sat}) · Sodium ${n.na} · Carbs ${n.carb} · Fiber ${n.fib} · Sugars ${n.sug} · Protein ${n.pro} · Potassium ${n.k}\n\nFrom Harvesting Health`;
+}
+const fileName = ext => F.open.name.toLowerCase().replace(/[^a-z0-9]+/g,"-") + "." + ext;
+async function saveNotes(){
+  const text = recipeText();
+  try{ if(navigator.share){ await navigator.share({title:F.open.name, text}); return; } }catch(e){ if(e && e.name === "AbortError") return; }
+  try{ await navigator.clipboard.writeText(text); toast("Recipe copied. Open your Notes app and paste it."); }
+  catch(e){ toast("Couldn't open sharing here. Try on your live site or phone."); }
+}
+function loadScript(src){ return new Promise((ok,bad) => { if(document.querySelector(`script[src="${src}"]`)) return ok(); const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = bad; document.head.appendChild(s); }); }
+async function shareOrDownload(blob, name, type){
+  const file = new File([blob], name, {type});
+  try{ if(navigator.canShare && navigator.canShare({files:[file]}) && /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)){ await navigator.share({files:[file], title:F.open.name}); return; } }
+  catch(e){ if(e && e.name === "AbortError") return; }
+  const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url), 4000);
+}
+async function savePDF(){
+  try{
+    toast("Making your PDF…");
+    await loadScript("vendor/jspdf.umd.min.js");
+    const { jsPDF } = window.jspdf; const doc = new jsPDF({unit:"pt", format:"letter"});
+    const r = F.open, k = F.servings / r.servings, n = nutRows(r,k), W = 532; let y = 56;
+    const add = (txt, size=11, style="normal", gap=4) => { doc.setFont("helvetica", style); doc.setFontSize(size); doc.splitTextToSize(txt, W).forEach(line => { if(y > 740){ doc.addPage(); y = 56; } doc.text(line, 40, y); y += size*1.3; }); y += gap; };
+    doc.setTextColor(44,92,57); add("Harvesting Health", 10, "bold", 2); doc.setTextColor(0,0,0);
+    add(r.name, 20, "bold", 2); add(`${F.servings} serving${F.servings>1?"s":""} · ${r.time} · ${r.tags.map(t=>TAGINFO[t].label).join(" · ")}`, 10, "normal", 6);
+    add(r.about, 11, "normal", 10);
+    add("Ingredients", 14, "bold", 2); lines(r,k).forEach(l => add("•  " + l.text, 11, "normal", 0)); y += 10;
+    add("Steps", 14, "bold", 2); r.steps.forEach((s,i) => add(`${i+1}.  ${s}`, 11, "normal", 2)); y += 8;
+    add("Nutrition per serving" + (r.facts ? "" : " (estimated)"), 14, "bold", 2);
+    add(`Calories ${n.cal}  ·  Total fat ${n.fat}  ·  Saturated fat ${n.sat}  ·  Sodium ${n.na}`, 11, "normal", 0);
+    add(`Carbohydrate ${n.carb}  ·  Fiber ${n.fib}  ·  Sugars ${n.sug}  ·  Protein ${n.pro}  ·  Potassium ${n.k}`, 11, "normal", 10);
+    doc.setTextColor(110,110,110); add((r.facts ? "Nutrition facts from the Harvesting Health team." : "Estimated from USDA FoodData Central; values vary by brand.") + " General nutrition education, not medical advice.", 8);
+    await shareOrDownload(doc.output("blob"), fileName("pdf"), "application/pdf");
+    toast("PDF ready.");
+  }catch(e){ toast("Couldn't make the PDF here. It works on your live Vercel site."); }
+}
+async function saveImage(){
+  try{
+    toast("Making your image…");
+    await loadScript("vendor/html2canvas.min.js");
+    const canvas = await html2canvas($('rcard'), {scale:2, backgroundColor:"#ffffff"});
+    const blob = await new Promise(ok => canvas.toBlob(ok, "image/png"));
+    await shareOrDownload(blob, fileName("png"), "image/png");
+    toast("On iPhone, tap Save Image to add it to your camera roll.");
+  }catch(e){ toast("Couldn't make the image here. It works on your live Vercel site."); }
+}
+
+/* ---------------- Tabs ---------------- */
+const TABS = ["home","wheel","foods","finder","recipes","guides","tools","resources"];
+function route(){
+  const h = location.hash.slice(1);
+  const tab = TABS.includes(h) ? h : "home";
+  TABS.forEach(t => $(t).classList.toggle('on', t===tab));
+  document.querySelectorAll('#nav a').forEach(a => a.classList.toggle('on', a.getAttribute('href')==="#"+tab));
+  const on = document.querySelector('#nav a.on'); if(on) on.scrollIntoView({inline:"nearest",block:"nearest"});
+}
+window.addEventListener('hashchange', () => { route(); window.scrollTo({top:0}); });
+drawWheel(); showNutrient("overview"); renderFoods(); renderFinder(); route();
 </script>
 </body>
 </html>
