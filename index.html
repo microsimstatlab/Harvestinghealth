@@ -421,7 +421,7 @@ $('foodview').addEventListener('click', e => {
 function handoutCards(type){
   return HANDOUTS.filter(h=>h.type===type).map(h=>`<div class="tile"><div class="ic">${type==="recipe"?"🍽️":"📄"}</div><h3>${esc(h.title)}</h3><p>${esc(h.description)}</p>
     <div style="margin-top:8px">${(h.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join("")}</div>
-    <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">${h.file?`<a class="btn" href="${esc(h.file)}" target="_blank" rel="noopener">View handout</a>`:""}${h.link?`<a class="btn ghost" href="${esc(h.link)}">${esc(h.linkLabel||"Open")}</a>`:""}${!h.file&&!h.link?`<span class="muted">Handout coming soon</span>`:""}</div></div>`).join("");
+    <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">${(h.files||[]).map(f=>`<a class="btn" href="${esc(f.file)}" target="_blank" rel="noopener">${esc(f.label)}</a>`).join("")}${h.file?`<a class="btn" href="${esc(h.file)}" target="_blank" rel="noopener">View handout</a>`:""}${h.link?`<a class="btn ghost" href="${esc(h.link)}">${esc(h.linkLabel||"Open")}</a>`:""}${!h.file&&!h.link&&!(h.files||[]).length?`<span class="muted">Handout coming soon</span>`:""}</div></div>`).join("");
 }
 $('recipelist').innerHTML = handoutCards("recipe");
 $('guidelist').innerHTML = handoutCards("guide");

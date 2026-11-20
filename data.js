@@ -13,35 +13,46 @@
 const HANDOUTS = [
   {
     type: "recipe",
-    title: "Harvesting Health Smoothie",
-    description: "Organic frozen fruit, soy or coconut milk and 100% coconut water. Our demo-event favorite.",
+    title: "Fruit Smoothie",
+    description: "Garden to plate: frozen fruit, soy milk and 100% coconut water, plus the nutrition benefits of each ingredient. Serves 1.",
     tags: ["Heart-healthy", "No added sugar"],
-    file: "",
+    files: [
+      { label: "Recipe card", file: "handouts/fruit-smoothie-recipe.png" }
+    ],
     link: "smoothie.html",
-    linkLabel: "Open the shopping calculator"
+    linkLabel: "Demo-event shopping calculator"
   },
   {
     type: "recipe",
     title: "Tzatziki",
     description: "A cool, refreshing Greek yogurt dip or spread with cucumber, garlic, lemon, dill and olive oil. Serves 4.",
     tags: ["Mediterranean", "No added sugar"],
-    file: "handouts/tzatziki-recipe.png",
+    files: [
+      { label: "Recipe card", file: "handouts/tzatziki-recipe.png" },
+      { label: "Ingredient benefits", file: "handouts/tzatziki-ingredient-benefits.png" },
+      { label: "Nutrition facts", file: "handouts/tzatziki-nutrition-facts.pdf" },
+      { label: "Washing and storing herbs", file: "handouts/washing-and-storing-produce-herbs.png" }
+    ],
+    link: "#finder",
+    linkLabel: "Scale it in Recipe Finder"
+  },
+  {
+    type: "recipe",
+    title: "Pico de Gallo",
+    description: "Garden to plate: fresh tomatoes, onion, cilantro, lemon and a little olive oil. Includes the nutrition benefits of each ingredient. Serves 4.",
+    tags: ["Heart-healthy", "No added sugar"],
+    files: [
+      { label: "Recipe card and nutrition benefits", file: "handouts/pico-de-gallo.pdf" }
+    ],
     link: "#finder",
     linkLabel: "Scale it in Recipe Finder"
   },
   {
     type: "guide",
-    title: "Tzatziki Nutrition Facts",
-    description: "Nutrition facts for one serving, plus what vitamin E, vitamin C, calcium, potassium and vitamin K do, and the phytonutrients in each ingredient.",
-    tags: ["Nutrition facts", "Phytonutrients"],
-    file: "handouts/tzatziki-nutrition-facts.pdf"
-  },
-  {
-    type: "guide",
-    title: "Tzatziki Ingredient Benefits",
-    description: "Why each ingredient is good for you: cucumber, dill, Greek yogurt, garlic, lemon juice and extra virgin olive oil.",
-    tags: ["Ingredients"],
-    file: "handouts/tzatziki-ingredient-benefits.png"
+    title: "Nutrient Guide",
+    description: "Macronutrients, amino acids, phytochemicals, micronutrients, minerals, vitamins, antioxidants and fiber: what they are and why they matter.",
+    tags: ["Heart-healthy", "Low glycemic index"],
+    file: "handouts/nutrient-guide.pdf"
   },
   {
     type: "guide",

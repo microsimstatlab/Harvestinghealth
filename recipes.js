@@ -50,6 +50,7 @@ const INGREDIENTS = {
   greekyogurt: {pick:"Greek yogurt", grp:"Dairy & alternatives", n:[59,10.2,3.6,0,3.2,0.4,0.1,36,141]},
   feta:        {pick:"Feta cheese", grp:"Dairy & alternatives", n:[264,14.2,4.1,0,4.1,21.3,14.9,1116,62]},
   walnuts:     {pick:"Walnuts", grp:"Pantry", n:[654,15.2,13.7,6.7,2.6,65.2,6.1,2,441]},
+  jalapeno:    {pick:"Jalapeño", grp:"Produce", n:[29,0.9,6.5,2.8,4.1,0.4,0.09,3,248]},
   dill:        {pick:"Dill", grp:"Herbs", n:[43,3.5,7,2.1,0,1.1,0.06,61,738]},
   chia:        {pick:"Chia seeds", grp:"Pantry", n:[486,16.5,42.1,34.4,0,30.7,3.3,16,407]},
   broth:       {grp:"Pantry", n:[6,0.3,1,0,0.5,0.1,0,58,30]},
@@ -83,17 +84,35 @@ const RECIPES = [
       extra:{"Calcium":"170mg","Iron":"0.4mg","Vitamin C":"6mg","Vitamin E":"2mg","Vitamin K":"20mcg","Vitamin D":"0mcg"}}
   },
   {
-    name:"Harvesting Health Smoothie", emoji:"🥤", servings:1, time:"5 min", meal:"Snack",
+    name:"Fruit Smoothie", emoji:"🥤", servings:1, time:"5 min", meal:"Breakfast or snack",
     tags:["dash"],
-    about:"Our demo-event smoothie: organic frozen fruit, soy milk and 100% coconut water.",
+    about:"Garden to plate. A fast, nutritious breakfast or snack from the Harvesting Health team. Add chia seeds for fiber and texture, or plant-based protein powder for extra protein.",
     ing:[
-      ["strawberry",1,"oz",28.35,"organic frozen strawberries"],
-      ["blueberry",1,"oz",28.35,"organic frozen blueberries"],
-      ["pineapple",0.82,"oz",28.35,"organic frozen pineapple"],
-      ["soymilk",1.67,"fl oz",30,"unsweetened soy milk (or coconut milk)"],
-      ["coconutwater",1.58,"fl oz",30,"100% coconut water, no sugar added"]
+      ["pineapple",0.5,"cup",165,"frozen pineapple (or mango)"],
+      ["strawberry",0.5,"cup",150,"frozen strawberries"],
+      ["soymilk",0.5,"cup",243,"soy milk (or other plant-based milk)"],
+      ["coconutwater",0.5,"cup",240,"coconut water (no sugar added)"]
     ],
-    steps:["Add the soy milk and coconut water to the blender first.","Add the frozen fruit.","Blend until smooth, about 30 to 60 seconds. Serve right away."]
+    steps:["Add all the ingredients to the blender and blend until smooth.","Add more coconut water as needed to adjust the thickness.","Serve and enjoy!"]
+  },
+  {
+    name:"Pico de Gallo", emoji:"🍅", servings:4, time:"15 min", meal:"Side or snack",
+    tags:["dash","lowgi","med"],
+    about:"Garden to plate. A fresh, no-cook salsa from the Harvesting Health team. Best enjoyed sharing style!",
+    ing:[
+      ["tomato",4,"",62,"roma tomatoes, finely chopped"],
+      ["onion",0.5,"medium",110,"onion, finely chopped"],
+      ["lemon",1,"",45,"lemon, juiced (or 1 lime)"],
+      ["cilantro",0.25,"cup",16,"fresh cilantro, finely chopped"],
+      ["oliveoil",0.5,"Tbsp",13.5,"olive oil"],
+      ["jalapeno",0.5,"",14,"jalapeño or serrano pepper, finely chopped (optional; remove seeds for less heat)"]
+    ],
+    steps:[
+      "In a medium bowl, combine the chopped tomatoes, onion, cilantro and optional pepper.",
+      "Add the lemon juice and olive oil.",
+      "Mix well and let sit at least 15 to 30 minutes so the flavors blend.",
+      "Serve and enjoy! Try both lime and lemon for extra tangy flavor, or swap the cilantro for parsley."
+    ]
   },
   {
     name:"Tomato Avocado Basil Salad", emoji:"🥗", servings:4, time:"10 min", meal:"Side",
